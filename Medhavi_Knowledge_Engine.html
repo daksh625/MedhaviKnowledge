@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medhavi Skills University — Knowledge Engine</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  /* MSU Brand Palette */
+  --blue:#1b8ec4;
+  --blue2:#1676a8;
+  --blue3:#0f5a85;
+  --blue-soft:#e8f4fb;
+  --blue-mid:#cce8f5;
+  --orange:#e8921a;
+  --orange2:#f5a832;
+  --orange-soft:#fef3e2;
+  /* Neutrals */
+  --bg:#f4f7fa;
+  --surface:#ffffff;
+  --surface2:#f8fbfd;
+  --card:#ffffff;
+  --text:#1a2d3d;
+  --text2:#2c4a5e;
+  --muted:#637a8a;
+  --muted2:#94adb8;
+  --border:#dce8f0;
+  --border2:#c5dcea;
+  /* Shadows */
+  --shadow:0 2px 12px rgba(27,142,196,0.09);
+  --shadow-hover:0 6px 28px rgba(27,142,196,0.16);
+  --shadow-card:0 1px 4px rgba(27,142,196,0.07),0 4px 16px rgba(27,142,196,0.06);
+  /* Glows */
+  --glow:rgba(27,142,196,0.25);
+  --glow-orange:rgba(232,146,26,0.25);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#eef3f7;}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--orange));border-radius:3px;}
+
+body{background:var(--bg);color:var(--text);font-family:'Inter',Arial,sans-serif;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden;}
+
+/* SUBTLE PARTICLE CANVAS */
+canvas#bgc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.18;}
+
+/* ── HEADER ─────────────────────────────── */
+header{
+  background:#ffffff;
+  border-bottom:1px solid var(--border);
+  padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;height:64px;
+  box-shadow:0 2px 16px rgba(27,142,196,0.08);
+}
+header::after{
+  content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--blue3),var(--blue),var(--orange),var(--orange2),var(--blue));
+  background-size:200% 100%;
+  animation:slideGrad 5s linear infinite;
+}
+@keyframes slideGrad{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+.hlogo{display:flex;align-items:center;gap:14px;}
+.hlogo img{width:44px;height:44px;object-fit:contain;}
+.hlogo-text{display:flex;flex-direction:column;line-height:1.2;}
+.hlogo-name{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:var(--blue3);letter-spacing:.2px;}
+.hlogo-sub{font-size:.67rem;color:var(--orange);letter-spacing:1.6px;text-transform:uppercase;font-weight:600;}
+.hbadge{
+  background:linear-gradient(135deg,var(--blue-soft),#e0f1fa);
+  border:1px solid var(--blue-mid);
+  border-radius:20px;padding:5px 16px;
+  font-size:.72rem;color:var(--blue2);font-weight:600;
+  letter-spacing:.5px;
+}
+
+/* ── LAYOUT ─────────────────────────────── */
+.layout{display:flex;flex:1;position:relative;z-index:1;}
+
+/* ── NAV ─────────────────────────────────── */
+nav{
+  width:238px;min-width:238px;
+  background:#ffffff;
+  border-right:1px solid var(--border);
+  padding:14px 0 20px;
+  position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;
+  box-shadow:2px 0 12px rgba(27,142,196,0.05);
+}
+nav::-webkit-scrollbar{width:3px;}
+nav::-webkit-scrollbar-thumb{background:var(--blue-mid);border-radius:2px;}
+.ng{
+  padding:12px 18px 4px;
+  font-size:.62rem;color:var(--blue2);
+  text-transform:uppercase;letter-spacing:2px;font-weight:700;
+  opacity:.7;
+}
+nav a{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 18px;
+  color:var(--muted);text-decoration:none;
+  font-size:.81rem;font-weight:400;
+  border-left:3px solid transparent;
+  transition:all .18s ease;
+  border-radius:0 8px 8px 0;
+  margin:1px 8px 1px 0;
+}
+nav a:hover{color:var(--blue);background:var(--blue-soft);border-left-color:var(--blue-mid);}
+nav a.active{color:var(--blue2);background:linear-gradient(90deg,var(--blue-soft),#f0f8fd);border-left-color:var(--blue);font-weight:600;}
+.nd{width:5px;height:5px;border-radius:50%;background:var(--muted2);transition:all .2s;flex-shrink:0;}
+nav a.active .nd{background:var(--blue);box-shadow:0 0 5px var(--glow);}
+nav a:hover .nd{background:var(--blue-mid);}
+
+/* ── MAIN ─────────────────────────────────── */
+main{flex:1;padding:30px 34px;min-height:0;}
+.sec{display:none;animation:fadeUp .32s ease;}
+.sec.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideGrad{0%{background-position:0%}100%{background-position:200%}}
+@keyframes stageFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes metricPop{from{transform:scale(.84);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shimmerLine{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+
+/* ── TYPOGRAPHY ──────────────────────────── */
+h2{
+  font-family:'Space Grotesk',sans-serif;
+  color:var(--blue3);font-size:1.55rem;
+  margin-bottom:20px;padding-bottom:12px;
+  position:relative;font-weight:700;letter-spacing:-.2px;
+}
+h2::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:48px;height:3px;border-radius:2px;
+  background:linear-gradient(90deg,var(--blue),var(--orange));
+}
+h3{color:var(--blue2);font-size:1rem;margin:20px 0 10px;font-weight:600;}
+h4{color:var(--blue3);font-size:.875rem;margin:8px 0 5px;font-weight:600;}
+p{line-height:1.78;margin-bottom:10px;color:var(--text2);font-size:.875rem;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{color:var(--blue2);text-decoration:underline;}
+code{background:var(--blue-soft);color:var(--blue2);padding:2px 8px;border-radius:4px;font-size:.82rem;border:1px solid var(--blue-mid);}
+
+/* ── CARDS ────────────────────────────────── */
+.card{
+  background:#ffffff;
+  border-radius:14px;padding:20px 22px;margin-bottom:14px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);
+  transition:all .25s ease;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--orange));
+  opacity:0;transition:opacity .25s;
+}
+.card:hover{box-shadow:var(--shadow-hover);border-color:var(--border2);}
+.card:hover::before{opacity:1;}
+
+/* ── TABLES ────────────────────────────────── */
+table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.82rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-card);}
+thead th{background:linear-gradient(90deg,var(--blue3),var(--blue2));color:#fff;padding:11px 14px;text-align:left;font-weight:600;font-size:.8rem;letter-spacing:.3px;}
+tbody tr{border-bottom:1px solid #eef3f7;transition:background .12s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--blue-soft);}
+tbody td{padding:9px 14px;color:var(--text2);}
+.vs-table thead th:nth-child(2){background:#c0392b;}
+.vs-table thead th:nth-child(3){background:#1a7a4a;}
+
+/* ── GRIDS ─────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+
+/* ── COMP CARDS ─────────────────────────────── */
+.cc{
+  background:#ffffff;border-radius:12px;padding:16px 18px;
+  border:1px solid var(--border);
+  border-left:4px solid var(--blue);
+  box-shadow:var(--shadow-card);
+  transition:all .22s ease;
+}
+.cc:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-left-color:var(--orange);}
+.cc h4{color:var(--blue3);margin:0 0 7px;font-size:.84rem;font-weight:600;}
+.cc p{font-size:.79rem;color:var(--muted);margin:0;line-height:1.6;}
+
+/* ── HERO ──────────────────────────────────── */
+.hero{
+  text-align:center;padding:48px 20px 36px;
+  background:linear-gradient(145deg,#f0f8fd,#fffbf5,#f4f9fc);
+  border-radius:20px;margin-bottom:24px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,146,26,.08),transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-40px;left:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(27,142,196,.07),transparent 70%);
+  pointer-events:none;
+}
+.hero-orb{display:none;}
+.hero-title{
+  font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--blue3),var(--blue),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.15;margin-bottom:10px;letter-spacing:-.5px;
+}
+.hero-sub{font-size:.9rem;color:var(--orange);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px;font-weight:600;}
+
+/* ── STATS ─────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin:22px 0;}
+.stat{
+  background:#ffffff;border-radius:14px;padding:18px 12px;text-align:center;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);
+  transition:all .28s ease;
+  animation:metricPop .5s ease both;
+  animation-delay:calc(var(--d,0)*0.06s);
+  position:relative;overflow:hidden;
+}
+.stat::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--orange));
+  transform:scaleX(0);transition:transform .3s ease;transform-origin:left;
+}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);}
+.stat:hover::after{transform:scaleX(1);}
+.snum{
+  font-family:'Space Grotesk',sans-serif;font-size:1.95rem;font-weight:800;
+  background:linear-gradient(135deg,var(--blue),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.slbl{font-size:.71rem;color:var(--muted);margin-top:5px;line-height:1.35;font-weight:500;}
+
+/* ── TAGS ──────────────────────────────────── */
+.tag{
+  display:inline-block;
+  background:var(--blue-soft);border:1px solid var(--blue-mid);
+  border-radius:5px;padding:2px 9px;font-size:.72rem;
+  color:var(--blue2);margin:2px 3px;font-weight:500;
+}
+.metric{
+  display:inline-block;
+  background:#e8f8ef;border:1px solid #b5dfc8;
+  border-radius:5px;padding:2px 9px;font-size:.72rem;
+  color:#1a6b3f;margin:2px 3px;font-weight:500;
+}
+.glow-text{
+  background:linear-gradient(90deg,var(--blue),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-weight:600;
+}
+
+/* ── LIFECYCLE ─────────────────────────────── */
+.lf{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+.ls{
+  background:#ffffff;border-radius:12px;padding:14px 12px;
+  border:1px solid var(--border);
+  border-top:4px solid var(--blue);
+  flex:1;min-width:120px;text-align:center;
+  box-shadow:var(--shadow-card);
+  transition:all .25s;
+  animation:stageFloat calc(3s + var(--i,0)*.35s) ease-in-out infinite;
+}
+.ls:hover{border-top-color:var(--orange);transform:translateY(-4px);box-shadow:var(--shadow-hover);}
+.lsn{
+  font-size:1.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--blue),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lst{color:var(--blue2);font-size:.78rem;font-weight:600;margin:4px 0;}
+.lsd{font-size:.71rem;color:var(--muted);}
+
+/* ── ORG BOXES ─────────────────────────────── */
+.ob{
+  background:#ffffff;border-radius:14px;padding:18px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);transition:all .25s;
+}
+.ob:hover{box-shadow:var(--shadow-hover);border-color:var(--border2);}
+.ob h4{color:var(--blue3);margin:0 0 12px;font-size:.9rem;font-weight:700;}
+.os{
+  background:var(--bg);border-radius:7px;
+  padding:7px 12px;margin-bottom:5px;font-size:.79rem;color:var(--text2);
+  border:1px solid var(--border);transition:all .15s;
+}
+.os:hover{border-color:var(--blue-mid);background:var(--blue-soft);}
+.os strong{color:var(--blue2);}
+
+/* ── DECK GRID ─────────────────────────────── */
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+.dc{
+  background:linear-gradient(145deg,#f0f8fd,#f7fbfe);
+  border-radius:12px;padding:16px 18px;
+  border:1px solid var(--blue-mid);
+  box-shadow:var(--shadow-card);transition:all .22s;
+}
+.dc:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);}
+.dc h4{color:var(--blue2);margin:0 0 7px;font-size:.85rem;font-weight:600;}
+.dc p{font-size:.77rem;color:var(--muted);margin:0;}
+
+/* ── Q&A ───────────────────────────────────── */
+.qi{
+  background:#ffffff;border-radius:12px;margin-bottom:8px;
+  border:1px solid var(--border);border-left:4px solid var(--blue);
+  box-shadow:var(--shadow-card);overflow:hidden;transition:all .2s;
+}
+.qi:hover{border-left-color:var(--orange);box-shadow:var(--shadow-hover);}
+.qq{
+  font-weight:600;color:var(--blue2);font-size:.875rem;
+  padding:14px 18px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  transition:background .15s;user-select:none;
+}
+.qq:hover{background:var(--blue-soft);}
+.qq.open{background:linear-gradient(90deg,var(--blue-soft),#f8fbfe);color:var(--blue3);}
+.qa-arrow{font-size:.9rem;transition:transform .22s;display:inline-block;color:var(--orange);}
+.qq.open .qa-arrow{transform:rotate(180deg);}
+.qa{color:var(--text2);line-height:1.72;font-size:.845rem;max-height:0;overflow:hidden;transition:max-height .32s ease,padding .2s ease;padding:0 18px;}
+
+/* ── SEARCH INPUTS ─────────────────────────── */
+.srch{
+  width:100%;padding:11px 18px;
+  background:#ffffff;border:1.5px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:.875rem;
+  outline:none;transition:all .2s;font-family:'Inter',sans-serif;margin-bottom:14px;
+  box-shadow:0 1px 4px rgba(27,142,196,0.06);
+}
+.srch:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,142,196,0.1);}
+.srch::placeholder{color:var(--muted2);}
+</style>
+</head>
+<body>
+<canvas id="bgc"></canvas>
+<header>
+  <div class="hlogo">
+    <img src="Medhavi_Skills_University_official_Logo.png" alt="MSU Logo" style="width:42px;height:42px;object-fit:contain;">
+    <div class="hlogo-text">
+      <span class="hlogo-name">Medhavi Skills University</span>
+      <span class="hlogo-sub">Skill &nbsp;·&nbsp; Empower &nbsp;·&nbsp; Liberate</span>
+    </div>
+  </div>
+  <span class="hbadge">Knowledge Engine v4</span>
+</header>
+
+<div class="layout">
+<nav>
+  <div class="ng">Overview</div>
+  <a href="#" onclick="show('home',this);return false;" class="active"><span class="nd"></span>🏠 Home</a>
+  <a href="#" onclick="show('about',this);return false;"><span class="nd"></span>📘 About MSU</a>
+  <a href="#" onclick="show('org',this);return false;"><span class="nd"></span>🏢 Org Structure</a>
+  <a href="#" onclick="show('paradigm',this);return false;"><span class="nd"></span>⚡ Skills vs Traditional</a>
+  <div class="ng">B2B Vertical</div>
+  <a href="#" onclick="show('ip',this);return false;"><span class="nd"></span>🤝 Industry Partnerships</a>
+  <a href="#" onclick="show('ep',this);return false;"><span class="nd"></span>🎓 Education Partnerships</a>
+  <a href="#" onclick="show('decks',this);return false;"><span class="nd"></span>📊 IP / EP Decks</a>
+  <div class="ng">B2C Vertical</div>
+  <a href="#" onclick="show('iac',this);return false;"><span class="nd"></span>🏨 IAC &amp; HHM</a>
+  <a href="#" onclick="show('crux',this);return false;"><span class="nd"></span>🎯 CRUX</a>
+  <div class="ng">Workforce</div>
+  <a href="#" onclick="show('mapl',this);return false;"><span class="nd"></span>🏭 MAPL Workforce Arm</a>
+  <div class="ng">WISE Model</div>
+  <a href="#" onclick="show('wise',this);return false;"><span class="nd"></span>🔄 WISE Operating Model</a>
+  <a href="#" onclick="show('matrix',this);return false;"><span class="nd"></span>🔲 Solutions Matrix</a>
+  <div class="ng">Programmes</div>
+  <a href="#" onclick="show('catalogue',this);return false;"><span class="nd"></span>📋 Programme Catalogue</a>
+  <a href="#" onclick="show('customqp',this);return false;"><span class="nd"></span>🔧 Custom QP</a>
+  <div class="ng">Infrastructure</div>
+  <a href="#" onclick="show('lms',this);return false;"><span class="nd"></span>💻 LMS &amp; Technology</a>
+  <a href="#" onclick="show('compliance',this);return false;"><span class="nd"></span>⚖️ Compliance &amp; Benefits</a>
+  <a href="#" onclick="show('global',this);return false;"><span class="nd"></span>🌍 Global Recognition</a>
+  <div class="ng">Reference</div>
+  <a href="#" onclick="show('sectors',this);return false;"><span class="nd"></span>🏗️ Sector Expertise</a>
+  <a href="#" onclick="show('cases',this);return false;"><span class="nd"></span>📈 Case Studies</a>
+  <a href="#" onclick="show('philosophy',this);return false;"><span class="nd"></span>💡 First Industry Approach</a>
+  <a href="#" onclick="show('partners',this);return false;"><span class="nd"></span>🤝 Partner Database</a>
+  <a href="#" onclick="show('glossary',this);return false;"><span class="nd"></span>📖 Glossary</a>
+  <a href="#" onclick="show('qa',this);return false;"><span class="nd"></span>❓ Q&amp;A Engine</a>
+  <a href="#" onclick="show('contact',this);return false;"><span class="nd"></span>📞 Contact</a>
+  <div class="ng">Knowledge Repository</div>
+  <a href="#" onclick="show('academic',this);return false;"><span class="nd"></span>📚 Academic Products</a>
+  <a href="#" onclick="show('training',this);return false;"><span class="nd"></span>🧑‍🏫 Training Material</a>
+</nav>
+<main>
+
+<!-- HOME -->
+<div id="home" class="sec on">
+<div class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-title">Medhavi Skills University</div>
+  <div class="hero-sub">Skill &nbsp;·&nbsp; Empower &nbsp;·&nbsp; Liberate</div>
+  <p style="max-width:640px;margin:0 auto 10px">India's leading work-integrated Skills University — delivering end-to-end workforce solutions spanning education, skilling, apprenticeship, credentialing and staffing across B2B and B2C channels.</p>
+</div>
+<div class="stats">
+  <div class="stat" style="--d:0"><div class="snum cnt" data-t="140">0+</div><div class="slbl">Awarding Body EP Partners</div></div>
+  <div class="stat" style="--d:1"><div class="snum cnt" data-t="60">0+</div><div class="slbl">Sectoral EP Partners</div></div>
+  <div class="stat" style="--d:2"><div class="snum cnt" data-t="44">0+</div><div class="slbl">MAPL Direct Clients</div></div>
+  <div class="stat" style="--d:3"><div class="snum cnt" data-t="43">0+</div><div class="slbl">HHM Hotel Partners</div></div>
+  <div class="stat" style="--d:4"><div class="snum cnt" data-t="30">0+</div><div class="slbl">Staffing Partners</div></div>
+  <div class="stat" style="--d:5"><div class="snum cnt" data-t="16">0+</div><div class="slbl">Industry Sectors</div></div>
+  <div class="stat" style="--d:6"><div class="snum cnt" data-t="11">0+</div><div class="slbl">Direct IP Corporates</div></div>
+  <div class="stat" style="--d:7"><div class="snum cnt" data-t="3">0+</div><div class="slbl">CRUX Active Cities</div></div>
+</div>
+<div class="card"><h3>What MSU Does</h3><p>MSU operates across two core market segments — <strong class="glow-text">B2B</strong> (Industry Partnerships + Education Partnerships, via MSU + MAPL) and <strong class="glow-text">B2C</strong> (IAC/HHM + CRUX) — delivering work-integrated degrees, skill certifications, apprenticeship management, and workforce staffing through a unified academic + commercial platform.</p></div>
+<div class="card"><h3>MSU's Competitive Moat</h3>
+<p>✅ UGC-recognised degrees earned <em>while working</em> (WISE model) &nbsp;|&nbsp; ✅ GST-exempt (Entry 66 &amp; 69, CGST 12/2017) &nbsp;|&nbsp; ✅ PF-exempt for WISE trainees (EPFO 27 July 2022) &nbsp;|&nbsp; ✅ NAPS 25% govt stipend subsidy &nbsp;|&nbsp; ✅ DigiLocker + ABC + Skill India Digital Hub verification &nbsp;|&nbsp; ✅ NCrF-aligned (GCC/ASEAN/UK/EU) &nbsp;|&nbsp; ✅ Custom QP design in 3–4 months &nbsp;|&nbsp; ✅ 5-layer credentialing stack &nbsp;|&nbsp; ✅ AI-adaptive gamified LMS (lms.msu.edu.in)</p></div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="sec">
+<h2>About Medhavi Skills University</h2>
+<div class="card"><p>Medhavi Skills University (MSU) is India's first private Skills University, established under the <strong style="color:var(--blue2)">Medhavi Skills University Act 2021, Govt. of Chhattisgarh</strong>. UGC-recognised, NAAC-accredited, ISO 9001:2015 certified. Headquartered in Bilaspur, Chhattisgarh. Tagline: <span class="glow-text">Skill · Empower · Liberate</span>.</p></div>
+<div class="card"><h3>Design Philosophy</h3><p>Captured in the phrase <strong style="color:var(--blue2)">PERFORM · EXPERIENCE · EXPLORE · CREATE</strong> — the four learning verbs of a Skills University graduate — versus the traditional university's <em>UNDERSTAND &amp; MEMORISE</em>. Employers co-design, co-deliver, assess, and fund programmes. Industry is not a downstream recipient — it is the primary architect.</p></div>
+<div class="g2">
+<div class="card"><h3>Mission</h3><p>To bridge the gap between education and employment by embedding learning inside industry — creating job-ready graduates who contribute from Day 1.</p></div>
+<div class="card"><h3>Vision</h3><p>To be India's largest work-integrated university ecosystem, globally recognised for producing skilled, certified, and degree-qualified industry professionals.</p></div>
+</div>
+<div class="card"><h3>Recognitions &amp; Accreditations</h3>
+<p>🏛️ UGC Recognised (Section 2f &amp; 12B) &nbsp;|&nbsp; 🎓 NAAC Accredited &nbsp;|&nbsp; 🔒 ISO 9001:2015 &nbsp;|&nbsp; 📋 NEP 2020 Pioneer<br>
+📊 NSQF/NHEQF Aligned &nbsp;|&nbsp; 🌍 NCrF Mapped &nbsp;|&nbsp; 🏦 ABC Registered &nbsp;|&nbsp; 📱 DigiLocker Integrated<br>
+🇮🇳 Skill India Digital Hub Registered &nbsp;|&nbsp; 💰 GST Exempt (Entry 66 &amp; 69) &nbsp;|&nbsp; 💼 PF Exempt (EPFO 27 July 2022)</p>
+</div>
+</div>
+
+<!-- ORG STRUCTURE -->
+<div id="org" class="sec">
+<h2>Organisational Structure</h2>
+<div class="card"><p>MSU's commercial model divides into <span class="glow-text">B2B</span> (Industry Partnerships + Education Partnerships, executed via MSU + MAPL) and <span class="glow-text">B2C</span> (IAC/HHM + CRUX). MAPL is the commercial workforce arm that pairs with MSU in all IP engagements.</p></div>
+<div class="g2">
+<div class="ob"><h4>🏭 B2B — Business to Business</h4>
+<div class="os"><strong>IP — Industry Partnerships</strong><br>Direct engagement with corporates &amp; employers</div>
+<div class="os" style="margin-left:10px">↳ IP Direct (Corporate) — MSU + corporate; WISE workforce degrees</div>
+<div class="os" style="margin-left:10px">↳ IP Staffing — MSU/MAPL + staffing firms; credential-led pipelines</div>
+<div class="os"><strong>EP — Education Partnerships</strong><br>Institutes wanting UGC credentials</div>
+<div class="os" style="margin-left:10px">↳ EP Sectoral — 60+ sector-specific delivery partners</div>
+<div class="os" style="margin-left:10px">↳ EP Awarding Body (A|B) — MSU issues credentials; 141 active</div>
+<div class="os"><strong>MAPL</strong> — payroll, sourcing, NAPS/NATS, staffing (44+ direct clients)</div>
+</div>
+<div class="ob"><h4>👤 B2C — Business to Consumer</h4>
+<div class="os"><strong>IAC — Industry as Campus</strong><br>Industry IS the classroom</div>
+<div class="os" style="margin-left:10px">↳ HHM — B.Sc. HHM 3yr (3m campus + 33m hotel); 43 hotels</div>
+<div class="os" style="margin-left:10px">↳ Retail, Facilities, QSR — expanding IAC verticals</div>
+<div class="os"><strong>CRUX</strong> — crux.msu.edu.in — working professionals</div>
+<div class="os" style="margin-left:10px">↳ MBA Accelerated (15m) &amp; Work-Integrated MBA (24m)</div>
+<div class="os" style="margin-left:10px">↳ MA Psychology | MA Child Psychology | PGD Counselling</div>
+<div class="os" style="margin-left:10px">↳ Active: Delhi · Kolkata · Dhanbad</div>
+</div>
+</div>
+</div>
+
+<!-- PARADIGM -->
+<div id="paradigm" class="sec">
+<h2>Skills University vs Traditional University</h2>
+<div class="card"><p>India's higher education system was designed for knowledge transfer, not employment creation. MSU was purpose-built to close this structural gap.</p></div>
+<div style="overflow-x:auto">
+<table class="vs-table">
+<thead><tr><th>Dimension</th><th>❌ Traditional University</th><th>✅ MSU — Skills University</th></tr></thead>
+<tbody>
+<tr><td><strong>Primary Purpose</strong></td><td>Impart academic knowledge</td><td>Build employment-ready competencies</td></tr>
+<tr><td><strong>Curriculum Design</strong></td><td>Faculty-led; updated infrequently</td><td>Industry co-designed; reflects live job roles</td></tr>
+<tr><td><strong>Learning Mode</strong></td><td>Classroom-based; fixed timetable</td><td>Onsite, On-Job, Online, In-Class, Community</td></tr>
+<tr><td><strong>Teacher Role</strong></td><td>Knowledge Giver — lectures &amp; grades</td><td>Facilitator &amp; Mentor — coaches real-work competency</td></tr>
+<tr><td><strong>Student Role</strong></td><td>Memorise &amp; reproduce</td><td>PERFORM · EXPERIENCE · EXPLORE · CREATE</td></tr>
+<tr><td><strong>Assessment</strong></td><td>Exam-based; theoretical recall</td><td>Continuous, practical, workplace-verified; ABC credit-linked</td></tr>
+<tr><td><strong>Employment</strong></td><td>After graduation</td><td>From Day 1 of programme (stipend paid by industry)</td></tr>
+<tr><td><strong>Credential Portability</strong></td><td>Paper-based; institution-specific</td><td>DigiLocker-native; ABC; NSQF/NHEQF; international</td></tr>
+<tr><td><strong>Industry Integration</strong></td><td>Occasional guest lectures</td><td>Structural: employers co-design, co-deliver, assess &amp; fund</td></tr>
+<tr><td><strong>Target Learner</strong></td><td>Full-time student, 18–22</td><td>Employed workers, career switchers, all ages</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- IP -->
+<div id="ip" class="sec">
+<h2>IP — Industry Partnerships (B2B)</h2>
+
+<div class="card" style="background:linear-gradient(135deg,#f0f8fd,#fffbf5)">
+<p style="font-size:.92rem;font-weight:500;color:var(--text)">IP is MSU&#39;s direct engagement with <strong>corporates and employers</strong> to deliver workforce development solutions. Executed jointly by <span class="glow-text">MSU</span> (academic credibility + UGC degrees) and <span class="glow-text">MAPL</span> (operational execution + payroll + compliance). Two primary modes: <strong>Direct Corporate</strong> and <strong>Staffing</strong>.</p>
+</div>
+
+<h3>Two Modes of IP Engagement</h3>
+<div class="g2">
+<div class="ob" style="border-left:4px solid var(--blue)">
+<h4 style="color:var(--blue2)">🏢 Direct (Corporate)</h4>
+<p style="font-size:.82rem;color:var(--text2);line-height:1.7">MSU partners directly with a corporate to deliver workforce skilling, credentialing, and degree programmes for their employees. Custom QPs designed around company SOPs. MSU + MAPL execute jointly — MSU provides degrees, MAPL handles NAPS/payroll.</p>
+<div class="os"><strong>Who:</strong> HR heads, L&amp;D directors, CSR teams</div>
+<div class="os"><strong>What:</strong> WISE degrees, custom skilling, certifications, RPL</div>
+<div class="os"><strong>Result:</strong> Reduced attrition · Faster ramp-up · Lower cost per hire · CSR eligibility</div>
+</div>
+<div class="ob" style="border-left:4px solid var(--orange)">
+<h4 style="color:var(--orange)">👥 Staffing Partnership</h4>
+<p style="font-size:.82rem;color:var(--text2);line-height:1.7">MSU/MAPL partners with staffing firms to upskill their deployed or sourced talent, creating stickier, credential-led workforce pipelines. Associates earn degrees while working across client sites — improving stickiness, NPS, and margins for the staffing firm.</p>
+<div class="os"><strong>Who:</strong> Staffing companies, workforce management firms</div>
+<div class="os"><strong>What:</strong> WISE for deployed workforce, RPL, NAPS management</div>
+<div class="os"><strong>Result:</strong> Lower churn · Better client retention · Credential differentiation</div>
+</div>
+</div>
+
+<h3>Four Solutions Delivered under IP</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>🎓 WISE — Work-Integrated Degrees</h4>
+<p>Apprenticeship-embedded degree programmes (B.Voc, D.Voc, B.Sc, B.Tech, MBA) where employees study <em>while</em> working. RPL credits for prior experience. Blended delivery: LMS + on-floor coaching. DigiLocker-verified, ABC-registered, NSQF-mapped. Zero disruption to operations.</p>
+<div style="margin-top:6px"><span class="tag">B.Voc</span><span class="tag">D.Voc</span><span class="tag">B.Sc</span><span class="tag">B.Tech</span><span class="tag">MBA</span></div>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>🏅 Skilling &amp; Certification</h4>
+<p>Short-to-long duration (STT/LTT) role-specific programmes aligned to company SOPs. Custom QP built on actual job roles. NSQF-certified. ABC credit-backed. Options: Co-Created (custom) or Off-the-Shelf (standard). Bespoke assessment rubrics. OJT logbook-based evaluation.</p>
+<div style="margin-top:6px"><span class="tag">Custom QP</span><span class="tag">NSQF Aligned</span><span class="tag">ABC Credits</span></div>
+</div>
+<div class="cc" style="border-left-color:var(--blue2)">
+<h4>📋 Apprenticeship — NAPS / NATS</h4>
+<p>MAPL manages full NAPS (National Apprenticeship Promotion Scheme) and NATS compliance: Apprenticeship India Portal filing, GoI stipend subsidy (25%), EPFO 2022 PF exemption. Active across 100+ manufacturing units. Applicable to all IP and MAPL direct clients.</p>
+<div style="margin-top:6px"><span class="tag">25% Stipend Subsidy</span><span class="tag">PF Exempt</span><span class="tag">Govt Scheme</span></div>
+</div>
+<div class="cc" style="border-left-color:#22c55e">
+<h4>💼 Payroll &amp; Sourcing (MAPL)</h4>
+<p>MAPL manages end-to-end payroll for apprentices and sourced workforce. Talent sourcing aligned to client JDs (Recruit-Train-Deploy model). Converts one-time staffing hires into long-term WFD partnerships. Builds client stickiness by embedding learning into the workforce supply chain.</p>
+<div style="margin-top:6px"><span class="tag">Recruit-Train-Deploy</span><span class="tag">Payroll Managed</span></div>
+</div>
+</div>
+
+<h3>IP Financial Model — Zero Incremental Cost</h3>
+<div class="card">
+<table>
+<thead><tr><th>Cost Element</th><th>Regular Hire</th><th>WISE via MSU+MAPL</th><th>Saving</th></tr></thead>
+<tbody>
+<tr><td>GST on training</td><td>18% applicable</td><td><strong style="color:#1a6b3f">GST Exempt</strong> (educational institution)</td><td style="color:#1a6b3f">18% saved</td></tr>
+<tr><td>PF contribution</td><td>12%+12% of wages</td><td><strong style="color:#1a6b3f">PF Exempt</strong> under EPFO 2022 circular</td><td style="color:#1a6b3f">24% saved</td></tr>
+<tr><td>Stipend subsidy</td><td>0%</td><td><strong style="color:#1a6b3f">25% GoI subsidy</strong> via NAPS</td><td style="color:#1a6b3f">25% saved</td></tr>
+<tr><td>CSR eligibility</td><td>Not applicable</td><td><strong style="color:#1a6b3f">Schedule VII CSR eligible</strong></td><td style="color:#1a6b3f">Fund via CSR</td></tr>
+<tr><td>Net incremental cost</td><td>100% of training cost</td><td colspan="2"><strong style="color:var(--blue2)">WISE = Zero or Negative Net Cost vs. Regular Hiring</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Direct Corporate IP Partners — 11+ Active</h3>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>Partner</th><th>Sector</th><th>Programme / Engagement</th><th>SKU Type</th><th>Outcomes / Status</th></tr></thead>
+<tbody>
+<tr><td><strong>🍖 Barbeque Nation</strong></td><td>QSR / Casual Dining</td><td>B.Voc &amp; D.Voc Hospitality &amp; Restaurant Operations (custom QP on BN SOPs)</td><td>Industry WISE – Co-Created, Industry Sponsored</td><td><span class="metric">700+ enrolled</span><span class="metric">40% attrition ↓</span><span class="metric">32% faster ramp-up</span></td></tr>
+<tr><td><strong>🏬 Nexus Select Trust</strong></td><td>Retail / Mall REIT</td><td>Aarunya Initiative — India&#39;s 1st Mall Management WISE (Certificate + B.Voc Retail/Facilities)</td><td>Industry WISE – Co-Created, CSR/Industry Sponsored</td><td><span class="metric">India&#39;s FIRST mall WISE</span><span class="metric">CSR-funded</span><span class="metric">17 malls scaling</span></td></tr>
+<tr><td><strong>✈️ AEQUS</strong></td><td>Aerospace &amp; Auto Components</td><td>AEDP — Apprenticeship Embedded Degree Programme (B.Voc Manufacturing Technology, 3yr)</td><td>WISE Sectoral Co-Created, Hybrid</td><td><span class="metric">95%+ retention</span><span class="metric">₹40L+ savings/yr</span><span class="metric">Custom QP in 3 months</span></td></tr>
+<tr><td><strong>📱 Dixon Technologies</strong></td><td>Electronics Manufacturing</td><td>Work-integrated B.Voc for electronics manufacturing workforce (off-the-shelf + custom)</td><td>Industry WISE – Co-Created, Student-Funded</td><td>Active</td></tr>
+<tr><td><strong>👕 Arvind Textiles</strong></td><td>Textile &amp; Apparel</td><td>Credential-backed skilling for textile &amp; apparel workforce (custom QP)</td><td>Industry WISE – Co-Created, Student-Funded</td><td>Active</td></tr>
+<tr><td><strong>🪵 Century Plyboard</strong></td><td>Manufacturing</td><td>Workforce development programme for manufacturing operations (B.Voc)</td><td>Industry WISE – Co-Created, Student-Funded</td><td>Active</td></tr>
+<tr><td><strong>🏥 Nephrocare Health Services</strong></td><td>Healthcare (Apollo Dialysis)</td><td>Healthcare workforce credentialing — dialysis technicians &amp; care staff</td><td>Skill Certification – Off-the-Shelf, Industry Sponsored</td><td>Active</td></tr>
+<tr><td><strong>☕ Chai Point (Mountain Trail Foods)</strong></td><td>F&amp;B / QSR</td><td>F&amp;B operations workforce programme (custom SOP-aligned)</td><td>Industry WISE – Off-the-Shelf, Industry Sponsored</td><td>Active</td></tr>
+<tr><td><strong>💪 Anytime Fitness (House of Fitness)</strong></td><td>Fitness / Wellness</td><td>Fitness industry workforce credentialing (trainers, floor staff)</td><td>Skill Certification – Off-the-Shelf, Industry Sponsored</td><td>Active</td></tr>
+<tr><td><strong>🏛️ Goa HR Dev Corporation</strong></td><td>State Government</td><td>State-level workforce development engagement — skilling + credentialing</td><td>Industry WISE – Off-the-Shelf, Student-Funded</td><td>Active</td></tr>
+<tr><td><strong>👶 Ipsaa Foundation</strong></td><td>Early Childhood Care</td><td>Early childcare workforce upskilling — anganwadi &amp; daycare staff</td><td>Industry WISE – Off-the-Shelf, Student-Funded</td><td>Active</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>IP Staffing Partners — 30+ Active</h3>
+<div class="cgrid">
+<div class="cc"><h4>🏆 Quess Corp</h4><p>India&#39;s largest workforce management company (500K+ associates). <strong>LEAP Programme</strong> — Learn &amp; Earn Associate Program. Deployed employees earn formal degrees while working across 100s of client sites. 3,000+ credentials in pilot year.</p></div>
+<div class="cc"><h4>🏗️ BVG Skill Academy</h4><p>Facilities management + healthcare support workforce. RPL + SOP-aligned curriculum for field staff. Founder <strong>Hanmantrao Gaikwad</strong> endorsement. B.Voc for facilities &amp; healthcare support staff via recognition of prior learning.</p></div>
+<div class="cc"><h4>🔧 LabourNet Services India</h4><p>Workforce development integration. Blue-collar skill formalisation via RPL pathway. Large-scale field workforce credentialing model across multiple sectors.</p></div>
+<div class="cc"><h4>🌐 Firstmeridian Global Services</h4><p>Credential-led staffing upgrade. Embeds WISE degrees into staffing proposition to improve associate stickiness and client value delivery.</p></div>
+<div class="cc"><h4>🌏 Layam Flexi Solutions</h4><p>Tamil Nadu-heavy frontline staffing pipeline. Manufacturing and auto sector focus. NAPS-enabled apprenticeship integration across South India client base.</p></div>
+<div class="cc"><h4>📊 TalentCorp Solutions India</h4><p>Industrial talent pipeline development. Credential-led workforce supply for engineering and manufacturing sectors.</p></div>
+<div class="cc"><h4>🤝 Regional Partners</h4><p>Team Plus HR Services · Lead HR Consulting · India HR Solutions · Adroit Staffing · People Mantra — regional staffing partners covering West, North, and Central India frontline workforce.</p></div>
+</div>
+
+<h3>MAPL Direct Industry Clients — 44 Accounts</h3>
+<div class="card">
+<p style="font-size:.8rem;color:var(--muted);margin-bottom:10px">NAPS/NATS active across 100+ manufacturing units. Auto &amp; Auto Ancillary is the largest segment.</p>
+<p><strong style="color:var(--blue2)">🚗 Auto / Auto Ancillary (largest segment):</strong> <span class="tag">Suprajit Engineering (9 units)</span><span class="tag">Endurance Technologies (10+ units)</span><span class="tag">Federal Mogul Goetza (Tenneco)</span><span class="tag">Mahindra &amp; Mahindra</span><span class="tag">Hyundai Motor India</span><span class="tag">Hyundai Transys Lear</span><span class="tag">Ashok Leyland</span><span class="tag">TVS Srichakra (2 units)</span><span class="tag">GKN Sinter Metals</span><span class="tag">RSB Transmission</span><span class="tag">Sansera Engineering</span><span class="tag">Yoon Woo Automotive</span><span class="tag">Cikautxo India</span><span class="tag">ALP Nishikawa</span><span class="tag">Epitome Components (3 units)</span><span class="tag">FIT Voltaira</span><span class="tag">SKH M India</span><span class="tag">B.U. Bhandari Automotives</span></p>
+<p><strong style="color:var(--blue2)">📱 Electronics / Manufacturing:</strong> <span class="tag">Dixon Technologies</span><span class="tag">Elin Electronics (Baddi + Ghaziabad)</span><span class="tag">Microtek New Technologies (2 units)</span><span class="tag">Penguin Electronics</span><span class="tag">Niftel Communication</span><span class="tag">Emitech Technology</span><span class="tag">Greaves Cotton</span></p>
+<p><strong style="color:var(--blue2)">💊 Pharma / Healthcare:</strong> <span class="tag">Mediforce Healthcare (3 units)</span><span class="tag">Pharma Force Lab (3 units)</span><span class="tag">M/s Charak Pharma</span><span class="tag">Sirmour Remedies</span><span class="tag">Inox Air Products</span></p>
+<p><strong style="color:var(--blue2)">📦 Packaging / FMCG:</strong> <span class="tag">Manjushree Technopack (2 units)</span><span class="tag">Varun Beverage (PepsiCo)</span><span class="tag">Jupiter International (2 units)</span><span class="tag">The Supreme Industries</span><span class="tag">JKPL Packaging</span></p>
+<p><strong style="color:var(--blue2)">🚚 Logistics / Infra:</strong> <span class="tag">OM Logistics</span><span class="tag">Lloyds Infrastructure &amp; Constructions</span><span class="tag">Zepto (Drogheria Sellers + Commodum Groceries)</span></p>
+<p><strong style="color:var(--blue2)">🔩 Others:</strong> <span class="tag">Purflux Engine Systems (3 units)</span><span class="tag">Hindalco Almex Aerospace</span><span class="tag">IndoFarm Limited</span><span class="tag">Eastman Cast &amp; Forge</span></p>
+</div>
+
+<h3>IP Concept Decks — 7 Sector Proposals</h3>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>Deck</th><th>Target Audience</th><th>Core Proposition</th><th>Live Partner Examples</th></tr></thead>
+<tbody>
+<tr><td><strong>🏢 Workforce Corporate</strong></td><td>All industries — HR &amp; L&D heads</td><td>Work-integrated degrees + skilling to build, retain &amp; grow workforce</td><td>Barbeque Nation, Nexus Select Trust, Arvind Textiles, Century Plyboard, Dixon, Chai Point</td></tr>
+<tr><td><strong>🖥️ Data Centres</strong></td><td>Hyperscalers &amp; DC operators</td><td>Deployment-ready 24x7 talent with SOP discipline; faster ramp-up</td><td>Active prospecting; AEQUS WISE as reference model for precision ops</td></tr>
+<tr><td><strong>🤖 AI Certification</strong></td><td>Corporates with white/grey collar workforce</td><td>Function-specific AI upskilling with credential-backed measurement</td><td>Intellipaat, Acciojob, Aureon Tech (via EP); corporate AI programmes ongoing</td></tr>
+<tr><td><strong>⚙️ B.Tech Proposal</strong></td><td>Manufacturing, engineering, infrastructure</td><td>Work-integrated B.Tech for ITI/diploma workforce</td><td>Suprajit, Endurance, Sansera, MRF, Voltas, Hyundai Motor (all MAPL/IP clients)</td></tr>
+<tr><td><strong>📚 MBA Proposal</strong></td><td>Corporates with mid-management talent gaps</td><td>Work-integrated MBA to build internal leadership pipeline</td><td>CRUX MBA crossover; Nexus Select Trust, BVG, Quess Corp as natural cross-sell</td></tr>
+<tr><td><strong>👥 Staffing Deck</strong></td><td>Staffing firms &amp; workforce management cos</td><td>Credential-led offering to improve stickiness, margins, pipeline quality</td><td>Quess (LEAP), BVG, LabourNet, Firstmeridian, Layam Flexi, TalentCorp, People Mantra</td></tr>
+<tr><td><strong>🏨 HHM Deck</strong></td><td>Hotel chains &amp; hospitality brands</td><td>Industry-as-Campus; 3-yr B.Sc. inside live hotel operations</td><td>JW Marriott, Crowne Plaza (3), Fern (8), Sarovar (4), Enrise (3), Pride (3), Radisson Blu</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>IP Process Flow — How It Works</h3>
+<div class="lf">
+<div class="ls" style="--i:0"><div class="lsn">1</div><div class="lst">Discovery</div><div class="lsd">BD meeting. Plant/site visit. HR pain-point mapping. Workforce size &amp; attrition data.</div></div>
+<div class="ls" style="--i:1"><div class="lsn">2</div><div class="lst">Solutioning</div><div class="lsd">Select WISE / Skill Cert / NAPS. Design vs off-shelf. Fee model. MAPL scope defined.</div></div>
+<div class="ls" style="--i:2"><div class="lsn">3</div><div class="lst">QP Design</div><div class="lsd">Custom QP on company SOPs. Job role mapping. NSQF level. Assessor guide. Logbook.</div></div>
+<div class="ls" style="--i:3"><div class="lsn">4</div><div class="lst">MOU &amp; Enrolment</div><div class="lsd">MOU signed. ABC/DigiLocker accounts created. LMS activated. NAPS/NATS filing.</div></div>
+<div class="ls" style="--i:4"><div class="lsn">5</div><div class="lst">Delivery</div><div class="lsd">OJT on shopfloor. LMS modules. MSU coordinator visits. Supervisor mentoring.</div></div>
+<div class="ls" style="--i:5"><div class="lsn">6</div><div class="lst">Assessment &amp; Degree</div><div class="lsd">Online proctored exams. Portfolio. UGC degree via DigiLocker. ABC credits deposited.</div></div>
+</div>
+</div>
+
+<!-- EP -->
+<!-- EP -->
+<div id="ep" class="sec">
+<h2>EP — Education Partnerships (B2B)</h2>
+
+<div class="card" style="background:linear-gradient(135deg,#f0f8fd,#fffbf5)">
+<p style="font-size:.92rem;font-weight:500;color:var(--text)">EP is MSU&#39;s model for external training institutes, skill centres, coaching institutes, and educational bodies seeking <span class="glow-text">UGC-recognised credentials without building university infrastructure.</span> Two sub-types: Sectoral (60+ partners) and Awarding Body (141 active partners).</p>
+</div>
+
+<h3>What EP Partners Get</h3>
+<div class="cgrid">
+<div class="cc"><h4>🎓 UGC-Backed Credentials</h4><p>All certificates, diplomas, and degrees issued under MSU&#39;s UGC recognition. Government-backed credibility transforms partner&#39;s training into a formally recognised qualification. DigiLocker-issued and verifiable nationally.</p></div>
+<div class="cc"><h4>🖥️ LMS + Exam Infrastructure</h4><p>MSU&#39;s full Learning Management System provided to EP partners for course delivery, assessments, and learner tracking. MSU manages end-to-end exam design, proctoring, and result declaration — partner focuses on training.</p></div>
+<div class="cc"><h4>📲 DigiLocker + ABC</h4><p>All learner credentials issued via DigiLocker (India&#39;s national document repository) and registered on Academic Bank of Credits. Students own their credentials — fully portable, employer-verifiable, stackable across institutions.</p></div>
+<div class="cc"><h4>🏷️ Co-Branded Certification</h4><p>Certificates issued jointly under MSU + partner branding. Elevates partner&#39;s market position. Alumni carry both the partner&#39;s name and MSU&#39;s UGC recognition, improving placement outcomes and enrolment conversions.</p></div>
+<div class="cc"><h4>📈 Structured Pathways</h4><p>Certificate → Diploma → Degree progression aligned to NEP 2020 and NCrF. Learners can stack credits over time. RPL (Recognition of Prior Learning) enables experienced workers to skip early levels and fast-track to degrees.</p></div>
+<div class="cc"><h4>⚖️ NEP 2020 Alignment</h4><p>Full alignment to National Education Policy 2020 — enabling multidisciplinary learning, credit transfer, and flexible degree completion timelines. Positions partners as NEP-compliant forward-looking institutions.</p></div>
+</div>
+
+<h3>Two EP Sub-Types</h3>
+<div class="g2">
+<div class="ob" style="border-left:4px solid var(--blue)">
+<h4 style="color:var(--blue2)">📚 EP Sectoral</h4>
+<p style="font-size:.82rem;color:var(--text2);line-height:1.7;margin-bottom:10px">Partnerships with sector-specific training institutes to issue MSU-recognised credentials for their vocational programmes. Institute retains its curriculum identity; MSU adds academic weight via UGC recognition, LMS, exams, and DigiLocker issuance.</p>
+<div class="os"><strong>Scale:</strong> 60+ active sectoral partners</div>
+<div class="os"><strong>Sectors:</strong> Healthcare, IT, Aviation, Beauty &amp; Wellness, Gems, Arts, Management, CSR, Defence, Manufacturing</div>
+<div class="os"><strong>Degree Types:</strong> Certificate, Diploma, B.Voc, B.Sc, MBA — matched to sector &amp; NSQF level</div>
+<div class="os"><strong>Best For:</strong> Training institutes that already have learners and delivery infra but lack degree power</div>
+</div>
+<div class="ob" style="border-left:4px solid var(--orange)">
+<h4 style="color:var(--orange)">🏛️ EP Awarding Body (A|B)</h4>
+<p style="font-size:.82rem;color:var(--text2);line-height:1.7;margin-bottom:10px">MSU acts as the <em>pure awarding body</em> — institute designs, markets, and delivers their programme entirely. MSU provides: LMS platform, exam infrastructure, degree/certificate issuance, DigiLocker credentials, and ABC registration. Minimal MSU involvement in delivery.</p>
+<div class="os"><strong>Scale:</strong> 141 active Awarding Body partners</div>
+<div class="os"><strong>Model:</strong> Partner is fully autonomous in curriculum &amp; delivery; MSU is backend academic credential engine</div>
+<div class="os"><strong>Fee:</strong> Per-learner or fixed-fee model; partner sets their own fee to students</div>
+<div class="os"><strong>Best For:</strong> EdTech companies, defence/govt training units, CSR foundations, niche skill centres</div>
+</div>
+</div>
+
+<h3>Sectoral EP Partners — By Domain (60+ Partners)</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>🏥 Healthcare / Paramedical</h4>
+<p><strong>GD Goenka Healthcare</strong> · Grace Paramedical &amp; Health Academy · Gayathri Medical Institute · Felix Hospital · Sushrutha Institute of Ayurvedic Science · Arogya Medical Education Trust · Ahalia International Foundation · Institute of Primary Health Training (IPTM)</p>
+</div>
+<div class="cc" style="border-left-color:#8b5cf6">
+<h4>💻 IT / Tech / EdTech</h4>
+<p><strong>Intellipaat</strong> · GUVI Geek Network · Navriti Technologies · Acciojob · Aureon Tech · Quad AI · Testbook (also A|B) · Physics Wallah (SOH) · IMS Proschool · Tally Education · Learnbay</p>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>⚙️ Manufacturing / Engineering</h4>
+<p><strong>AEQUS</strong> — AEDP (precision aerospace manufacturing). Vishal Kulkarni, AVP Skill Dev AEQUS, is the key reference for WISE-linked sectoral credentialing in precision manufacturing. NAPS-embedded B.Voc.</p>
+</div>
+<div class="cc" style="border-left-color:#06b6d4">
+<h4>✈️ Aviation / Hospitality / Media</h4>
+<p><strong>Airgo Aviation &amp; Hospitality Academy</strong> · Skytech Aviation Services · ZICA · Frameboxx · Adrex Media School · Orient Flights — aviation, cabin crew, media production, and hospitality service pathways</p>
+</div>
+<div class="cc" style="border-left-color:#ec4899">
+<h4>💅 Beauty / Wellness</h4>
+<p><strong>ORANE International</strong> (pan-India beauty chain) · National Nutrition &amp; Wellness Academy · Swasthgram · Wellcaza — cosmetology, nutrition, wellness coaching, spa therapy credentials</p>
+</div>
+<div class="cc" style="border-left-color:#f59e0b">
+<h4>💎 Gems / Jewellery / Gemology</h4>
+<p><strong>GJA Gem &amp; Jewellery Academy</strong> · IGJ · Surya Institute of Gemology — diamond grading, jewellery design, gemology certification pathways aligned to NSQF</p>
+</div>
+<div class="cc" style="border-left-color:#10b981">
+<h4>🎭 Arts / Creative / Performing</h4>
+<p><strong>Future School of Performing Arts</strong> · Drama Schools Foundation Mumbai · Wisdom College for Creativity &amp; Design · LIT School (Disruptive Edutech) · Gamer2Maker — performing arts, design, animation, gaming credentials</p>
+</div>
+<div class="cc" style="border-left-color:#6366f1">
+<h4>🏦 Management / BFSI</h4>
+<p><strong>LCBS</strong> · IIPMS · Elevate Management Institute · Alims School of Business · EFOS · IMI Kolkata · OP Jindal Community College — BBA, MBA, finance, banking, and management pathways</p>
+</div>
+<div class="cc" style="border-left-color:#84cc16">
+<h4>🌱 CSR / Foundation / NGO</h4>
+<p><strong>Ambuja Foundation</strong> · Wockhardt Foundation · PANTISS Foundation · Learning Links Foundation — community skilling programmes, rural workforce credentialing, CSR Schedule VII funded</p>
+</div>
+</div>
+
+<h3>Awarding Body (A|B) Partners — 141 Active Partners</h3>
+<div class="card">
+<p style="font-size:.8rem;color:var(--muted);margin-bottom:12px">MSU acts as pure academic backend — institute designs &amp; delivers; MSU provides LMS, exams, UGC credentials, DigiLocker, ABC.</p>
+<p><strong style="color:var(--blue2)">🖥️ EdTech Scale:</strong> <span class="tag">Testbook Edu Solutions</span><span class="tag">Intellipaat Software Solutions</span><span class="tag">Addictive Learning Technology (Learnbay)</span><span class="tag">Acciojob</span><span class="tag">GUVI Geek Network</span><span class="tag">IMS Proschool</span></p>
+<p><strong style="color:var(--blue2)">🔧 Vocational &amp; Skill:</strong> <span class="tag">SMART Institute</span><span class="tag">Gramin Shiksha</span><span class="tag">G-Tech Education</span><span class="tag">Hi-Tech Computer Centre</span><span class="tag">PMY Auto Institute</span><span class="tag">ITCT Education</span><span class="tag">A2Z Technical Institute</span></p>
+<p><strong style="color:var(--blue2)">🏥 Healthcare:</strong> <span class="tag">Care Skills Academy</span><span class="tag">Grace Paramedical</span><span class="tag">Society for School of Medical Technology</span><span class="tag">NCMPS Med Skills Council</span><span class="tag">National Nutrition &amp; Wellness Academy</span></p>
+<p><strong style="color:var(--blue2)">🎖️ Defence / Government:</strong> <span class="tag">2 Guards – Hisar Military Station</span><span class="tag">Welfare Branch Embassy of India (Kathmandu)</span><span class="tag">Kendriya Bhandar</span></p>
+<p><strong style="color:var(--blue2)">🤝 CSR / Trust:</strong> <span class="tag">Wockhardt Foundation</span><span class="tag">Leelas Foundation</span><span class="tag">Manju Samaj Kalyan Foundation</span><span class="tag">Durga Charitable Society</span><span class="tag">M P Foundation Educational Trust</span></p>
+<p><strong style="color:var(--blue2)">🏆 Premium Institutions:</strong> <span class="tag">International Management Institute Kolkata</span><span class="tag">OP Jindal Community College</span><span class="tag">Neotia Skill Development Academy</span></p>
+<p><strong style="color:var(--blue2)">💎 Gems / Creative / Niche:</strong> <span class="tag">GJA Gem &amp; Jewellery Academy</span><span class="tag">Surya Institute of Gemology</span><span class="tag">Drama Schools Foundation Mumbai</span><span class="tag">Gamer2Maker</span></p>
+</div>
+
+<h3>EP Deck Variants — 3 Tailored Proposals</h3>
+<div class="dgrid">
+<div class="dc">
+<h4>📦 EP Combined Deck</h4>
+<p><strong>Audience:</strong> All institute types. Full EP proposition — UGC credentials + LMS + exam infra + co-branding + NEP 2020 alignment. Most versatile deck.</p>
+<p style="font-size:.78rem;color:var(--muted);margin-top:6px"><strong>Partners:</strong> GD Goenka Healthcare · IMS Proschool · Intellipaat · Frameboxx · ORANE · OP Jindal · IMI Kolkata</p>
+</div>
+<div class="dc">
+<h4>🏛️ EP Awarding Body Deck</h4>
+<p><strong>Audience:</strong> EdTech cos, CSR foundations, govt/defence units. Pure awarding body — partner designs &amp; delivers; MSU issues credentials. 141 active.</p>
+<p style="font-size:.78rem;color:var(--muted);margin-top:6px"><strong>Partners:</strong> Testbook · GUVI · Learnbay · Care Skills Academy · SMART Institute · Hi-Tech Computer · 2 Guards Military Station · PMY Auto Institute · Drama Schools Foundation</p>
+</div>
+<div class="dc">
+<h4>⚡ EP WISE Deck</h4>
+<p><strong>Audience:</strong> Institutes running industry-linked training seeking apprenticeship-embedded degree recognition under the WISE framework.</p>
+<p style="font-size:.78rem;color:var(--muted);margin-top:6px"><strong>Partners:</strong> Airgo Aviation &amp; Hospitality Academy · Skytech Aviation Services · BVG Skill Academy (crossover) · Navriti Technologies · Gramin Shiksha</p>
+</div>
+</div>
+
+<h3>EP Onboarding Process</h3>
+<div class="lf">
+<div class="ls" style="--i:0"><div class="lsn">1</div><div class="lst">Partner Discovery</div><div class="lsd">Institute identified. Sectoral or A|B model assessed. Programme catalogue reviewed.</div></div>
+<div class="ls" style="--i:1"><div class="lsn">2</div><div class="lst">MOU Signing</div><div class="lsd">Terms agreed — per-learner fee, co-branding rights, LMS access, exam schedule.</div></div>
+<div class="ls" style="--i:2"><div class="lsn">3</div><div class="lst">Programme Setup</div><div class="lsd">Curriculum mapped to NSQF/NCrF. LMS configured. Assessment rubrics built. ABC/DigiLocker integrated.</div></div>
+<div class="ls" style="--i:3"><div class="lsn">4</div><div class="lst">Learner Enrolment</div><div class="lsd">Students enrolled on MSU portal. ABC accounts created. DigiLocker linked. LMS access granted.</div></div>
+<div class="ls" style="--i:4"><div class="lsn">5</div><div class="lst">Delivery &amp; Assessment</div><div class="lsd">Partner delivers. MSU manages exams (online proctored). Assessors certified. Quality audits.</div></div>
+<div class="ls" style="--i:5"><div class="lsn">6</div><div class="lst">Credential Issuance</div><div class="lsd">UGC degree issued via DigiLocker. ABC credits deposited. Co-branded certificate delivered.</div></div>
+</div>
+</div>
+
+<!-- DECKS -->
+<!-- DECKS -->
+<div id="decks" class="sec">
+<h2>IP Concept Decks &amp; EP Deck Variants</h2>
+<h3>7 IP Concept Decks</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>Deck</th><th>Target Audience</th><th>Core Proposition</th><th>Key Partners</th></tr></thead><tbody>
+<tr><td><strong>🏢 Workforce Corporate</strong></td><td>All industries — HR &amp; L&D heads</td><td>Work-integrated degrees + skilling to build, retain &amp; grow workforce</td><td>Barbeque Nation, Nexus, Arvind, Century, Dixon, Chai Point</td></tr>
+<tr><td><strong>🖥️ Data Centres</strong></td><td>Hyperscalers &amp; DC operators</td><td>Deployment-ready 24x7 talent with SOP discipline; faster ramp-up</td><td>Active prospecting; AEQUS WISE as reference</td></tr>
+<tr><td><strong>🤖 AI Certification</strong></td><td>Corporates with white/grey collar workforce</td><td>Function-specific AI upskilling with credential-backed measurement</td><td>Intellipaat, Acciojob, Aureon Tech</td></tr>
+<tr><td><strong>⚙️ B.Tech Proposal</strong></td><td>Manufacturing, engineering, infra</td><td>Work-integrated B.Tech for ITI/diploma workforce</td><td>Suprajit, Endurance, Sansera, MRF, Voltas, Hyundai</td></tr>
+<tr><td><strong>🎓 MBA Proposal</strong></td><td>Corporates with mid-management gaps</td><td>Work-integrated MBA to build internal leadership pipeline</td><td>CRUX MBA; Nexus, BVG, Quess as cross-sell</td></tr>
+<tr><td><strong>👥 Staffing Deck</strong></td><td>Staffing firms &amp; workforce managers</td><td>Credential-led offering to improve stickiness, margins, pipeline quality</td><td>Quess (LEAP), BVG, LabourNet, Firstmeridian, Layam, TalentCorp</td></tr>
+<tr><td><strong>🏨 HHM Deck</strong></td><td>Hotel chains &amp; hospitality brands</td><td>Industry-as-Campus; 3-yr B.Sc. inside live hotel operations</td><td>JW Marriott, Crowne Plaza (3), Fern (8), Sarovar (4), Enrise (3)</td></tr>
+</tbody></table></div>
+<h3 style="margin-top:20px">3 EP Deck Variants</h3>
+<div class="dgrid">
+<div class="dc"><h4>📦 EP Combined Deck</h4><p>Full EP proposition — credentials, LMS, exam infra, co-branding, NEP 2020 alignment. For all institute types. GD Goenka, IMS Proschool, ORANE, OP Jindal, IMI Kolkata.</p></div>
+<div class="dc"><h4>🏛️ EP Awarding Body Deck</h4><p>MSU as pure Awarding Body — partner designs &amp; delivers; MSU issues UGC credentials. 141 active. Testbook, GUVI, Care Skills, Drama Schools Foundation.</p></div>
+<div class="dc"><h4>⚡ EP WISE Deck</h4><p>For institutes running industry-linked training seeking apprenticeship-embedded degree recognition. Airgo Aviation, Skytech, BVG, Navriti, Gramin Shiksha.</p></div>
+</div>
+</div>
+
+<!-- IAC & HHM -->
+<div id="iac" class="sec">
+<h2>IAC — Industry as Campus &amp; HHM</h2>
+<div class="card"><p>IAC is MSU's flagship B2C model where an industry partner's operational environment <span class="glow-text">becomes the classroom.</span> Students enrol, learn through real work, earn a stipend, and graduate with a formal degree — combining education, employment, and credentialing on Day 1.</p></div>
+<div class="g2">
+<div class="card"><h3>🏨 HHM Programme</h3>
+<p><strong>Award:</strong> B.Sc. Hospitality &amp; Hotel Management<br>
+<strong>Duration:</strong> 3 years (3 months campus + 33 months live hotel)<br>
+<strong>Stipend:</strong> Paid by hotel throughout<br>
+<strong>Partners:</strong> 43 active hotels<br>
+<strong>Academic tie-up:</strong> IIM Kozhikode<br>
+<strong>Result:</strong> 100% placement; productive from Day 1</p></div>
+<div class="card"><h3>🔁 Other IAC Sectors</h3>
+<p>The IAC model extends across any sector where a partner provides live operational environment:</p>
+<p><span class="tag">QSR / F&B</span><span class="tag">Retail</span><span class="tag">Facilities Mgmt</span><span class="tag">Manufacturing</span><span class="tag">Mall Management</span></p>
+<p>Aarunya Initiative (Nexus Select Trust) = India's first Mall Management IAC programme.</p></div>
+</div>
+<h3>43 Active Hotel Partners</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)"><h4>🌟 International Chains</h4><p>JW Marriott · Crowne Plaza Greater Noida · Crowne Plaza Mayur Vihar · Crowne Plaza Rohini · Holiday Inn Mayur Vihar · Radisson Blu Greater Noida · Intercontinental Hotel Jaipur</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>🏨 Sarovar Group (4)</h4><p>Sarovar Bhubaneswar · Sarovar Portico Bhubaneswar · Sarovar Junagarh · Nataraj Sarovar Portico Jhansi</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>🌿 The Fern Hotels (8)</h4><p>Fern Ecotel Lonavala · Fern Bhopal · Fern Goregaon · Fern Igatpuri · Fern Leo Resort Junagadh · Fern Residency Aurangabad · Fern Residency Palghar</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>🎨 Enrise by Sayaji (3)</h4><p>Enrise Kevadia · Enrise Lonavala · Enrise Gandhidham</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>🎖️ Pride Hotels (3)</h4><p>The Pride Elite Aurangabad · The Pride Bhopal · The Pride Nagpur</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>🏖️ Other Properties</h4><p>Sterling Holidays Puri · Golden Tulip Bhiwadi · Regenta Lonavala · Royal Orchid Nasik · City Park Hotel · Lemon Tree Motihari · Ayush Resort Panvel</p></div>
+</div>
+</div>
+
+<!-- CRUX -->
+<div id="crux" class="sec">
+<h2>CRUX — Centre for Reskilling, Upskilling &amp; Extension</h2>
+<div class="card"><p>🌐 <a href="https://crux.msu.edu.in">crux.msu.edu.in</a> &nbsp;|&nbsp; Active cities: <span class="tag">Delhi</span><span class="tag">Kolkata</span><span class="tag">Dhanbad</span></p>
+<p>MSU's dedicated B2C platform for working professionals seeking to upgrade qualifications. NEP 2020 &amp; NCrF aligned. WISE-PLUS delivery — no need to leave job. RPL credits reduce programme duration.</p></div>
+<h3>Programme Offerings</h3>
+<table><thead><tr><th>Category</th><th>Programme</th><th>Duration</th><th>Target</th></tr></thead><tbody>
+<tr><td>Management</td><td>Accelerated Skill MBA (Pro)</td><td>15 months</td><td>Working professionals — fast-track</td></tr>
+<tr><td>Management</td><td>Work Integrated MBA (Pro)</td><td>24 months</td><td>Working professionals — comprehensive</td></tr>
+<tr><td>Management</td><td>Accelerated Skill MBA</td><td>15 months</td><td>General working professionals</td></tr>
+<tr><td>Management</td><td>Work Integrated MBA</td><td>24 months</td><td>General working professionals</td></tr>
+<tr><td>Psychology</td><td>MA in Psychology</td><td>2 years</td><td>HR, counsellors, people roles</td></tr>
+<tr><td>Psychology</td><td>MA in Child Psychology</td><td>2 years</td><td>Educators, childcare professionals</td></tr>
+<tr><td>Psychology</td><td>PGD in Counselling &amp; Psychotherapy</td><td>1 year</td><td>Healthcare, HR, counsellors</td></tr>
+</tbody></table>
+<div class="card"><h3>How CRUX Works (WISE-PLUS)</h3>
+<p><strong style="color:var(--blue2)">1. Apply Online</strong> — No entrance exam for experienced professionals<br>
+<strong style="color:var(--blue2)">2. RPL Assessment</strong> — Credits for prior skills reduce duration<br>
+<strong style="color:var(--blue2)">3. Weekend / Online Learning</strong> — LMS on weekends &amp; evenings; no disruption to job<br>
+<strong style="color:var(--blue2)">4. Assessment</strong> — Online proctored exams + portfolio submission<br>
+<strong style="color:var(--blue2)">5. Credential</strong> — UGC degree via DigiLocker; NCrF-aligned; globally recognised</p></div>
+<div class="card"><h3>Channel Partners</h3>
+<p>• CRUX Delhi &nbsp;|&nbsp; CRUX Kolkata &nbsp;|&nbsp; CRUX Dhanbad — franchise/channel locations<br>
+• <strong style="color:var(--blue2)">Shine (Student Revenue)</strong> — lead channel partner for enrolments<br>
+• <strong style="color:var(--blue2)">Shine (Assessment)</strong> — assessment channel partner</p></div>
+</div>
+
+<!-- MAPL -->
+<div id="mapl" class="sec">
+<h2>MAPL — Medhavi's Commercial Workforce Arm</h2>
+<div class="card"><p><span class="glow-text">MSU provides credentialling power; MAPL provides operational muscle.</span> MAPL handles Staffing, Payroll, NAPS/NATS compliance, Sourcing, and RTD for 44 direct industry clients and 30+ staffing partners.</p></div>
+<h3>44 Direct Industry Clients by Sector</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:#f59e0b"><h4>🚗 Auto / Auto Ancillary</h4><p>Suprajit Engineering (9 units) · Endurance Technologies (10+ units) · Federal Mogul Goetza (Tenneco) · M&amp;M · Hyundai Motor India · Hyundai Transys Lear · Ashok Leyland · TVS Srichakra (2) · GKN Sinter Metals · RSB Transmission · Sansera Engineering · Yoon Woo · Cikautxo · ALP Nishikawa · Epitome Components (3) · FIT Voltaira · SKH M India · BU Bhandari</p></div>
+<div class="cc" style="border-left-color:#3b82f6"><h4>📱 Electronics / Mfg</h4><p>Dixon Technologies · Elin Electronics (2 units) · Microtek New Technologies (2) · Penguin Electronics · Niftel Communication · Emitech Technology · Greaves Cotton</p></div>
+<div class="cc" style="border-left-color:#10b981"><h4>💊 Pharma / Healthcare</h4><p>Mediforce Healthcare (3 units) · Pharma Force Lab (3 units) · M/s Charak Pharma · Sirmour Remedies · Inox Air Products</p></div>
+<div class="cc" style="border-left-color:#8b5cf6"><h4>📦 Packaging / FMCG</h4><p>Manjushree Technopack (2) · Varun Beverage (PepsiCo) · Jupiter International (2) · The Supreme Industries · JKPL Packaging</p></div>
+<div class="cc" style="border-left-color:#06b6d4"><h4>🚛 Logistics / Infra</h4><p>OM Logistics · Lloyds Infrastructure &amp; Constructions · Zepto (Drogheria Sellers + Commodum Groceries)</p></div>
+<div class="cc" style="border-left-color:#ec4899"><h4>🏭 Others</h4><p>Purflux Engine Systems (3) · Hindalco Almex Aerospace · IndoFarm Limited · Eastman Cast &amp; Forge · Britannia Industries (Rudrapur)</p></div>
+</div>
+<h3>30+ Staffing Partners</h3>
+<table><thead><tr><th>Partner</th><th>Engagement</th></tr></thead><tbody>
+<tr><td><strong>Quess Corp</strong></td><td>LEAP Programme — credential-led workforce; 3,000+ issued in pilot year</td></tr>
+<tr><td><strong>BVG Skill Academy</strong></td><td>Facilities + Healthcare; RPL + SOP-aligned credential pathway</td></tr>
+<tr><td><strong>LabourNet Services India</strong></td><td>Workforce development; 30,000+ workers annually</td></tr>
+<tr><td><strong>Firstmeridian Global Services</strong></td><td>Credential-led staffing upgrade</td></tr>
+<tr><td><strong>Layam Flexi Solutions</strong></td><td>Tamil Nadu frontline staffing pipeline</td></tr>
+<tr><td><strong>TalentCorp Solutions India</strong></td><td>Industrial talent pipeline development</td></tr>
+<tr><td><strong>Team Plus HR · Lead HR · India HR Solutions · Adroit Staffing · People Mantra</strong></td><td>Regional staffing partners</td></tr>
+</tbody></table>
+</div>
+
+<!-- WISE MODEL -->
+<div id="wise" class="sec">
+<h2>WISE Operating Model</h2>
+<div class="card"><p><span class="glow-text">Work-Integrated Skilling &amp; Education (WISE)</span> — learners placed inside industry from Day 0, earning a stipend while pursuing a UGC-recognised degree. 80–90% of programme time in the workplace. Industry IS the campus.</p></div>
+<h3>Three-Layer Delivery Architecture</h3>
+<table><thead><tr><th>Layer</th><th>Activities</th><th>Responsible</th><th>When</th></tr></thead><tbody>
+<tr><td><strong style="color:var(--blue2)">Layer 1: Enrolment</strong></td><td>Student enrolled. QR-coded admission letter. ABC account. DigiLocker linked. LMS activated. NAPS/NATS filed.</td><td>MSU Academic + MAPL</td><td>Day 0</td></tr>
+<tr><td><strong style="color:var(--blue2)">Layer 2: OJT at Industry</strong></td><td>80–90% time on floor. OJT Logbook. Supervisor mentoring. LMS modules supplement. R&amp;R sessions.</td><td>Industry Partner</td><td>Ongoing</td></tr>
+<tr><td><strong style="color:var(--blue2)">Layer 3: Certification</strong></td><td>LMS assessments. MSU coordinator visits. Online exams. Degree issued. DigiLocker credential. ABC credits deposited.</td><td>MSU Academic + Assessment</td><td>Continuous + End</td></tr>
+</tbody></table>
+<h3>6-Stage Learner Lifecycle</h3>
+<div class="lf">
+<div class="ls" style="--i:0"><div class="lsn">1</div><div class="lst">Need Assessment</div><div class="lsd">Skills &amp; career goals assessed. Programme selected. NAPS confirmed.</div></div>
+<div class="ls" style="--i:1"><div class="lsn">2</div><div class="lst">Learning Plan</div><div class="lsd">Tailored to role, RPL credit, career trajectory. LMS configured.</div></div>
+<div class="ls" style="--i:2"><div class="lsn">3</div><div class="lst">Learning Experience</div><div class="lsd">LMS + live classes + on-floor OJT + logbook + gamification.</div></div>
+<div class="ls" style="--i:3"><div class="lsn">4</div><div class="lst">Application</div><div class="lsd">Real work projects. Supervisor assessment. Credits recorded.</div></div>
+<div class="ls" style="--i:4"><div class="lsn">5</div><div class="lst">Certification</div><div class="lsd">Online exams. Degree issued. R&amp;R at workplace. DigiLocker.</div></div>
+<div class="ls" style="--i:5"><div class="lsn">6</div><div class="lst">Continuous Growth</div><div class="lsd">Advanced modules. Next-level WISE. ABC credits stacked.</div></div>
+</div>
+<div class="card"><h3>WISE Programme Structure</h3>
+<table><thead><tr><th>Parameter</th><th>Diploma / D.Voc</th><th>Bachelor Degree</th><th>PG Degree</th></tr></thead><tbody>
+<tr><td>Types</td><td>Diploma / D.Voc</td><td>B.Voc / B.Com / B.Sc / BBA / B.Tech</td><td>M.Voc / MBA / Masters / PGD</td></tr>
+<tr><td>Eligibility</td><td>10th / Equivalent</td><td>12th / Equivalent</td><td>Graduate / Equivalent</td></tr>
+<tr><td>Duration</td><td>2 Years</td><td>3 Years</td><td>1–2 Years</td></tr>
+<tr><td>NSQF Level</td><td>4–5</td><td>5–6</td><td>6–7</td></tr>
+<tr><td>Dual Cert</td><td>MSU + MSDE/NSDC</td><td>MSU + MSDE/NSDC</td><td>MSU + MSDE/NSDC</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- MATRIX -->
+<div id="matrix" class="sec">
+<h2>Solutions Matrix</h2>
+<div style="overflow-x:auto"><table><thead><tr><th>Solution</th><th>IP Corp</th><th>IP Staffing</th><th>EP Sectoral</th><th>EP A|B</th><th>IAC/HHM</th><th>MAPL</th><th>CRUX</th></tr></thead><tbody>
+<tr><td><strong>WISE Degree</strong></td><td>✅</td><td>✅</td><td>✅</td><td>—</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td><strong>Skill Certification</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+<tr><td><strong>NAPS / NATS</strong></td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+<tr><td><strong>Payroll / Sourcing</strong></td><td>—</td><td>✅</td><td>—</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+<tr><td><strong>Custom QP</strong></td><td>✅</td><td>—</td><td>✅</td><td>—</td><td>✅</td><td>—</td><td>—</td></tr>
+<tr><td><strong>RPL Assessment</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td><td>✅</td><td>✅</td></tr>
+</tbody></table></div>
+<h3>Stakeholder Mapping</h3>
+<table><thead><tr><th>Stakeholder</th><th>Solutions</th><th>Key Benefit</th></tr></thead><tbody>
+<tr><td>Industry / Corporate</td><td>WISE, Cert, RPL, Custom QP, NAPS</td><td>Trained workforce; GST/PF savings; CSR eligibility</td></tr>
+<tr><td>Staffing Companies</td><td>WISE, RTD, credential-led staffing</td><td>Client stickiness; better margins; trained pipeline</td></tr>
+<tr><td>Training Institutes</td><td>EP Sectoral / A|B</td><td>UGC credentials without university infrastructure</td></tr>
+<tr><td>Working Professionals</td><td>CRUX MBA / Psychology, WISE-PLUS</td><td>UGC degree while employed; RPL credit for experience</td></tr>
+<tr><td>Fresh Graduates</td><td>WISE, IAC/HHM</td><td>Job + degree simultaneously; stipend during training</td></tr>
+<tr><td>Hotels / Hospitality</td><td>WISE HHM, NAPS</td><td>Zero recruitment cost; productive Day 1</td></tr>
+<tr><td>Govt / CSR</td><td>NAPS/NATS, RPL, Skill Cert</td><td>Schedule VII CSR; social impact reporting</td></tr>
+</tbody></table>
+</div>
+
+<!-- CATALOGUE -->
+<div id="catalogue" class="sec">
+<h2>Programme Catalogue — 16 Sectors</h2>
+<input type="text" class="srch" id="catSearch" placeholder="Search programme, sector, level..." oninput="filterCat()">
+<div style="overflow-x:auto">
+<table id="catT"><thead><tr><th>Sector</th><th>Programme</th><th>Award</th><th>Duration</th><th>NSQF</th></tr></thead><tbody>
+<tr><td>Tourism &amp; Hospitality</td><td>B.Sc. Hospitality &amp; Hotel Management</td><td>B.Sc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Tourism &amp; Hospitality</td><td>D.Voc. Hotel Management</td><td>D.Voc.</td><td>2 Yrs</td><td>5</td></tr>
+<tr><td>Tourism &amp; Hospitality</td><td>Diploma in Food &amp; Beverage</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Tourism &amp; Hospitality</td><td>Diploma in Hotel Front Office</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>IT / ITeS</td><td>BCA (Work-Integrated)</td><td>BCA</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>IT / ITeS</td><td>B.Voc. Information Technology</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>IT / ITeS</td><td>PGD in Data Analytics</td><td>PGD</td><td>1 Yr</td><td>7</td></tr>
+<tr><td>IT / ITeS</td><td>PGD in AI &amp; Machine Learning</td><td>PGD</td><td>1 Yr</td><td>7</td></tr>
+<tr><td>Electronics / Hardware</td><td>B.Voc. Electronics &amp; Hardware</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Electronics / Hardware</td><td>D.Voc. Electronics Manufacturing</td><td>D.Voc.</td><td>2 Yrs</td><td>5</td></tr>
+<tr><td>Electronics / Hardware</td><td>Diploma in EV Technology</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Automotive</td><td>B.Tech (Work-Integrated)</td><td>B.Tech</td><td>4 Yrs</td><td>6</td></tr>
+<tr><td>Automotive</td><td>D.Voc. Automotive Service Technology</td><td>D.Voc.</td><td>2 Yrs</td><td>5</td></tr>
+<tr><td>Automotive</td><td>Diploma in EV Service</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>BFSI</td><td>B.Voc. Banking &amp; Financial Services</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>BFSI</td><td>MBA (Financial Services)</td><td>MBA</td><td>2 Yrs</td><td>7</td></tr>
+<tr><td>Management</td><td>BBA (Work-Integrated)</td><td>BBA</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Management</td><td>MBA (Work-Integrated)</td><td>MBA</td><td>2 Yrs</td><td>7</td></tr>
+<tr><td>Management</td><td>Accelerated Skill MBA (15 months)</td><td>MBA</td><td>15 Mo</td><td>7</td></tr>
+<tr><td>Management</td><td>MBA (HR &amp; People Management)</td><td>MBA</td><td>2 Yrs</td><td>7</td></tr>
+<tr><td>Healthcare</td><td>B.Sc. Healthcare Management</td><td>B.Sc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Healthcare</td><td>D.Voc. Medical Lab Technology</td><td>D.Voc.</td><td>2 Yrs</td><td>5</td></tr>
+<tr><td>Healthcare</td><td>PGD in Hospital Administration</td><td>PGD</td><td>1 Yr</td><td>7</td></tr>
+<tr><td>Retail</td><td>B.Voc. Retail Management</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Retail</td><td>Diploma in Sales &amp; Merchandising</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Logistics</td><td>B.Voc. Supply Chain &amp; Logistics</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Logistics</td><td>Diploma in Warehouse Management</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Agriculture</td><td>B.Voc. Agri-Business Management</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Agriculture</td><td>Diploma in Food Processing</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Construction</td><td>B.Voc. Construction Management</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Construction</td><td>Diploma in Interior Design</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Facilities Mgmt</td><td>B.Voc. Facilities Management</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Facilities Mgmt</td><td>Diploma in Housekeeping Operations</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Psychology</td><td>MA in Psychology</td><td>M.A.</td><td>2 Yrs</td><td>7</td></tr>
+<tr><td>Psychology</td><td>MA in Child Psychology</td><td>M.A.</td><td>2 Yrs</td><td>7</td></tr>
+<tr><td>Psychology</td><td>PGD Counselling &amp; Psychotherapy</td><td>PGD</td><td>1 Yr</td><td>7</td></tr>
+<tr><td>Textile / Apparel</td><td>B.Voc. Apparel Design &amp; Technology</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Aviation</td><td>B.Sc. Aviation Operations</td><td>B.Sc.</td><td>3 Yrs</td><td>6</td></tr>
+<tr><td>Aviation</td><td>Diploma in Airport Ground Handling</td><td>Diploma</td><td>1 Yr</td><td>4</td></tr>
+<tr><td>Media &amp; Entertainment</td><td>B.Voc. Media Production</td><td>B.Voc.</td><td>3 Yrs</td><td>6</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- CUSTOM QP -->
+<div id="customqp" class="sec">
+<h2>Custom QP Development</h2>
+<div class="card"><p>MSU offers end-to-end <span class="glow-text">Custom Qualification Pack (QP) Development</span> for industry partners needing bespoke skill standards aligned to their specific SOPs, equipment, and job roles — beyond what off-the-shelf SSC QPs provide.</p></div>
+<table><thead><tr><th>Challenge</th><th>Standard SSC QP</th><th>Custom QP by MSU</th></tr></thead><tbody>
+<tr><td>Alignment to company SOPs</td><td>Generic across sector</td><td>Written around your exact SOPs</td></tr>
+<tr><td>Equipment-specific outcomes</td><td>Generic equipment refs</td><td>Mapped to your specific equipment</td></tr>
+<tr><td>Assessment granularity</td><td>Broad competency units</td><td>Granular job-role tasks</td></tr>
+<tr><td>Credentialing</td><td>SSC issue only</td><td>MSU + optionally SSC dual issue</td></tr>
+<tr><td>Speed</td><td>12–18 month SSC process</td><td>3–4 month MSU fast-track</td></tr>
+</tbody></table>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)"><h4>1. Job Role Analysis</h4><p>Plant/site visits. Line manager interviews. Workplace observation. 10–20 job roles mapped. NSQF level determined.</p></div>
+<div class="cc" style="border-left-color:var(--blue2)"><h4>2. QP Drafting</h4><p>Competency units drafted. Performance criteria written. Knowledge &amp; skills delineated. Client review cycle (2 iterations).</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>3. Curriculum Build</h4><p>OJT logbook template. LMS module map. Classroom supplement. Assessment rubric. Assessor guide.</p></div>
+<div class="cc" style="border-left-color:var(--blue2)"><h4>4. Certification</h4><p>MSU credential. DigiLocker delivery. NSQF badge. Optional SSC co-branding. Bulk batch API issuance.</p></div>
+</div>
+<div class="card"><p><strong>Custom QP reference clients:</strong> Suprajit Engineering, Hyundai Transys, Dixon Technologies, Mediforce Healthcare, Nexus Select Trust</p></div>
+</div>
+
+<!-- LMS -->
+<div id="lms" class="sec">
+<h2>LMS — Learning Management System</h2>
+<div class="card"><p>🌐 <a href="https://lms.msu.edu.in">lms.msu.edu.in</a> &nbsp;|&nbsp; Demo: <code style="background:var(--blue-soft);padding:2px 8px;border-radius:4px;color:var(--blue2)">samplestudent@msu.edu.in</code> / <code style="background:var(--blue-soft);padding:2px 8px;border-radius:4px;color:var(--blue2)">lms@123</code></p></div>
+<div class="cgrid">
+<div class="cc"><h4>📱 Multi-Device Access</h4><p>Responsive across mobile, tablet, desktop. PWA experience. Offline video download for low-bandwidth areas.</p></div>
+<div class="cc"><h4>📊 Analytics Dashboard</h4><p>Live enrolment data. Assessment scores. Completion rates. Sector-wise cohort views for HR/admin.</p></div>
+<div class="cc"><h4>🎬 Video Learning</h4><p>HD video content. Industry-specific modules. Bilingual (Hindi + English). Chapter-wise navigation. Speed control.</p></div>
+<div class="cc"><h4>📝 Assessments</h4><p>MCQ + subjective. Proctored online exams. Auto-grading. Instant feedback. Reattempt policy configurable.</p></div>
+<div class="cc"><h4>📋 OJT Logbook</h4><p>Digital daily log. Supervisor e-sign. Milestone tracking. Linked to credit accumulation. WISE compliance record.</p></div>
+<div class="cc"><h4>🏅 Gamification</h4><p>Points, badges, leaderboards. Completion streaks. R&amp;R trigger alerts. Engagement analytics for HR.</p></div>
+<div class="cc"><h4>📜 E-Certificate</h4><p>Auto-generated DigiLocker-linked digital certificate. QR-verifiable. NSQF-tagged. Bulk issuance API.</p></div>
+<div class="cc"><h4>🔗 Integration APIs</h4><p>HRMS integration. DigiLocker API. ABC API. NAPS/NATS feed. Skill India Digital Hub (SIDH).</p></div>
+<div class="cc"><h4>👩‍🎓 Cohort Management</h4><p>Batch enrolment by partner. Role-based access. Bulk upload. Sub-admin for each partner HR team.</p></div>
+<div class="cc"><h4>📡 Live Classes</h4><p>Integrated virtual classroom. Mentor-led sessions. Recorded for replay. Attendance auto-tracked.</p></div>
+<div class="cc"><h4>🌐 Multi-Language</h4><p>Hindi + English. Regional language content planned. UI localization. Glossary tooltips.</p></div>
+<div class="cc"><h4>🔒 Compliance Reports</h4><p>Audit-ready reports. NAPS/NATS log. Attendance records. Assessment logs. Exportable for client HR.</p></div>
+</div>
+</div>
+
+<!-- COMPLIANCE -->
+<div id="compliance" class="sec">
+<h2>Compliance &amp; Financial Benefits</h2>
+<div class="g2">
+<div class="card"><h3>GST Exemption — Entry 66</h3><p>Services by a vocational education provider recognised by MSDE as NOS/QP provider are <span class="glow-text">fully GST-exempt</span> under CGST Notification No. 12/2017. MSU qualifies for all skill certification programmes. <strong style="color:var(--blue2)">18% cost saving</strong> vs. taxable training vendors.</p></div>
+<div class="card"><h3>GST Exemption — Entry 69</h3><p>Services provided by a university for education (including WISE degree programmes) are <span class="glow-text">GST-exempt</span> under CGST Notification No. 12/2017 (as amended). Applies to all UGC-recognised degree programmes delivered via WISE.</p></div>
+</div>
+<div class="card"><h3>PF Exemption (EPFO Letter — 27 July 2022)</h3>
+<p>WISE trainees registered as <em>student trainees</em> under the apprenticeship framework are <strong>not "employees"</strong> under the EPF &amp; MP Act 1952. <span class="glow-text">Zero PF on stipend.</span></p>
+<table><thead><tr><th>Trainees</th><th>Monthly Stipend</th><th>PF @24% Saved/Month</th><th>Annual Saving</th></tr></thead><tbody>
+<tr><td>100</td><td>₹15,000</td><td>₹3,60,000</td><td><strong style="color:var(--blue2)">₹43.2 lakhs</strong></td></tr>
+<tr><td>50</td><td>₹15,000</td><td>₹1,80,000</td><td><strong style="color:var(--blue2)">₹21.6 lakhs</strong></td></tr>
+<tr><td>25</td><td>₹15,000</td><td>₹90,000</td><td><strong style="color:var(--blue2)">₹10.8 lakhs</strong></td></tr>
+</tbody></table>
+</div>
+<div class="card"><h3>NAPS — 25% Govt Stipend Subsidy</h3>
+<table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+<tr><td>Reimbursement rate</td><td>25% of stipend paid by employer</td></tr>
+<tr><td>Maximum reimbursable</td><td>₹1,500/month per apprentice</td></tr>
+<tr><td>Eligibility</td><td>Firms with 4+ regular employees</td></tr>
+<tr><td>Duration</td><td>6 months to 3 years</td></tr>
+<tr><td>Filing</td><td>Apprenticeship India Portal (MAPL-managed)</td></tr>
+</tbody></table>
+</div>
+<div class="card"><h3>CSR Eligibility — Schedule VII</h3><p>WISE skilling qualifies as <strong style="color:var(--blue2)">Schedule VII CSR activity</strong> — Companies Act 2013, Item (ii) "promoting education" and Item (iv) "Vocational skills". Large corporates can fund WISE enrolments from mandatory CSR budgets. MSU provides CSR impact reports, DigiLocker trainee records for compliance.</p></div>
+<h3>5-Layer Credentialing Stack</h3>
+<div class="lf">
+<div class="ls" style="--i:0"><div class="lsn">1</div><div class="lst">DigiLocker</div><div class="lsd">Govt-backed. Tamper-proof. Shareable link. Permanent.</div></div>
+<div class="ls" style="--i:1"><div class="lsn">2</div><div class="lst">ABC</div><div class="lsd">Academic Bank of Credits. NEP 2020. ABCID linked to Aadhaar.</div></div>
+<div class="ls" style="--i:2"><div class="lsn">3</div><div class="lst">SIDH</div><div class="lsd">Skill India Digital Hub. 5L+ employer visibility nationwide.</div></div>
+<div class="ls" style="--i:3"><div class="lsn">4</div><div class="lst">QR Letter</div><div class="lsd">QR-coded admission letter. Instant employer verification Day 1.</div></div>
+<div class="ls" style="--i:4"><div class="lsn">5</div><div class="lst">NSQF/NHEQF</div><div class="lsd">Level 4–7 mapped. National + international recognition.</div></div>
+</div>
+</div>
+
+<!-- GLOBAL -->
+<div id="global" class="sec">
+<h2>Global Recognition &amp; Ambitions</h2>
+<div class="g2">
+<div class="card"><h3>International Framework Alignment</h3>
+<p>MSU's NSQF-mapped credentials are aligned to international qualification frameworks enabling cross-border portability:</p>
+<p><span class="tag">GCC Countries</span><span class="tag">ASEAN Nations</span><span class="tag">UK RQF</span><span class="tag">European EQF</span><span class="tag">Australia AQF</span></p>
+<p>Active conversations underway with Gulf-region employers for WISE-trained talent pipelines in Hospitality, Facilities, Healthcare, and Construction.</p></div>
+<div class="card"><h3>Key Institutional Recognitions</h3>
+<p>✅ UGC Act 1956 — Statutory recognition<br>
+✅ Section 2(f) &amp; 12B status<br>
+✅ NAAC Accredited<br>
+✅ NEP 2020 pioneer implementation<br>
+✅ National Skills University — Category A<br>
+✅ MSDE recognised QP/NOS provider<br>
+✅ DigiLocker partner institution<br>
+✅ Skill India Digital Hub registered<br>
+✅ Academic Bank of Credits partner<br>
+✅ NCrF (National Credit Framework) early adopter</p></div>
+</div>
+</div>
+
+<!-- SECTOR EXPERTISE -->
+<div id="sectors" class="sec">
+<h2>Sector Expertise — Deep Dive</h2>
+<div class="card"><p>MSU has built dedicated delivery capability across <span class="glow-text">16 industry sectors</span>. Each sector has specific QPs, partner networks, compliance nuances, and programme variations.</p></div>
+<h3>🚗 Automotive &amp; Auto Ancillary — MSU's Largest Sector</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:#f59e0b"><h4>Scale</h4><p>18+ clients including Suprajit (9 units), Endurance (10+), Hyundai, M&amp;M, Ashok Leyland, TVS. Largest sector by trainee volume.</p></div>
+<div class="cc" style="border-left-color:#f59e0b"><h4>Programmes</h4><p>B.Tech (Work-Integrated) · D.Voc. Automotive · Diploma in EV Technology · Diploma in EV Service · Custom QPs for OEM shopfloor roles</p></div>
+<div class="cc" style="border-left-color:#f59e0b"><h4>Buyer Persona</h4><p>HR Heads at Tier-1/2 OEM suppliers. Pain: 30–40% attrition, PF cost burden, no standardised credential for ITI workforce. WISE solves all three.</p></div>
+<div class="cc" style="border-left-color:#f59e0b"><h4>Financial Impact</h4><p>PF exempt (EPFO 2022). NAPS 25% subsidy. GST exempt. CSR eligible. B.Tech pathway for ITI+Diploma workforce = retention driver.</p></div>
+</div>
+<h3>🏨 Tourism &amp; Hospitality</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)"><h4>Scale</h4><p>43 hotel partners. IIM Kozhikode tie-up. India's most comprehensive hotel-embedded degree programme.</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>Unique Model</h4><p>Student lives in hotel from month 4. Hotel pays stipend. 3 months campus + 33 months live ops. 100% placement rate.</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>Partner Groups</h4><p>International: JW Marriott, Crowne Plaza, Radisson Blu, Holiday Inn. Indian: Fern (8), Sarovar (4), Enrise (3), Pride (3), Lemon Tree, Sterling, Golden Tulip.</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>Key Benefit for Hotels</h4><p>Zero recruitment cost. Day 1 productive. NAPS 25% stipend subsidy. PF-exempt classification. Custom QP for hotel-specific roles.</p></div>
+</div>
+<h3>📱 Electronics / Hardware</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:#3b82f6"><h4>Scale</h4><p>Dixon Technologies, Elin Electronics (2 units), Microtek (2), Penguin, Niftel, Emitech. Growing rapidly with PLI scheme expansion.</p></div>
+<div class="cc" style="border-left-color:#3b82f6"><h4>Opportunity</h4><p>₹4.69L crore PLI scheme. 1M+ new jobs projected. Dixon targeting 50K workforce. MSU = preferred credential partner for PLI-beneficiary factories.</p></div>
+</div>
+<h3>💊 Pharma &amp; Healthcare</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:#10b981"><h4>MAPL Clients</h4><p>Mediforce Healthcare (3 units), Pharma Force Lab (3 units), Charak Pharma, Sirmour Remedies, Inox Air Products.</p></div>
+<div class="cc" style="border-left-color:#10b981"><h4>EP Partners</h4><p>GD Goenka Healthcare, Felix Hospital, Grace Paramedical, Arogya, Ahalia Foundation, Nephrocare (Apollo Dialysis via IP).</p></div>
+</div>
+<h3>🏬 Retail &amp; Facilities Management</h3>
+<div class="card"><p><strong>Aarunya Initiative</strong> (Nexus Select Trust) — India's first mall management WISE programme. Mall staff enrolled in B.Voc. Retail/Facilities. Live mall = OJT campus. Custom QP for mall roles. CSR Schedule VII funded. Replication planned across all 17 Nexus malls nationwide.</p></div>
+<h3>💻 IT / ITeS &amp; AI</h3>
+<div class="card"><p>EP: Intellipaat, GUVI, Acciojob, Navriti, Testbook, Aureon Tech, Physics Wallah (SOH). IP AI Certification deck for corporates. Data Centre deck for hyperscalers. PGD in Data Analytics and AI/ML via WISE. BCA work-integrated for IT sector.</p></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="cases" class="sec">
+<h2>Case Studies — Proven Impact Across All Verticals</h2>
+<div class="card" style="background:linear-gradient(135deg,#f0f8fd,#fffbf5)">
+<p style="font-size:.88rem;color:var(--text2)">One case study per vertical — IP Corporate, IP Staffing, EP Sectoral, EP Awarding Body, IAC/HHM, CRUX, MAPL Manufacturing, Custom QP, and CSR. Each demonstrates a specific MSU SKU in action with real outcomes.</p>
+</div>
+
+<!-- CASE 1: IP CORPORATE — BARBEQUE NATION -->
+<div class="card" style="border-left:4px solid var(--blue)">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:var(--blue);color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">IP CORPORATE</span>
+<span style="background:var(--blue-soft);color:var(--blue2);border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">WISE – Co-Created · SKU 4</span>
+</div>
+<h3 style="margin-top:0;color:var(--blue3)">Case 1: Barbeque Nation — From Restaurant Floor to Recognised Degree</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>Barbeque Nation Hospitality Limited</strong> | QSR / Casual Dining | 700+ employees enrolled</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">60–80% frontline attrition; 3–4 month ramp-up for new hires; no formal career pathway for kitchen/floor staff; traditional degree programmes required staff to stop working</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">Work-integrated B.Voc &amp; D.Voc in Hospitality &amp; Restaurant Operations, built directly on Barbeque Nation&#39;s own SOPs, service standards, and kitchen workflows. Blended delivery: online LMS modules + on-floor coaching. Credentials DigiLocker-verified, ABC-registered, transferable across employers. MAPL handled NAPS filings.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">700+ employees enrolled</span><span class="metric">40% attrition reduction</span><span class="metric">32% faster ramp-up</span><span class="metric">18% GST saving</span><span class="metric">Programme embedded in L&amp;D policy</span></td></tr>
+</tbody></table>
+<div style="background:var(--blue-soft);border-left:3px solid var(--blue);padding:10px 14px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82rem;font-style:italic;color:var(--text2)">"Partnering with MSU allows us to integrate structured learning into the workplace — building skilled professionals while they continue to work." <br><strong style="font-style:normal;color:var(--blue2)">— Rahul Agrawal, CEO, Barbeque Nation</strong></div>
+</div>
+
+<!-- CASE 2: IP CORPORATE — AEQUS (AEDP) -->
+<div class="card" style="border-left:4px solid #8b5cf6">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#8b5cf6;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">IP CORPORATE – AEROSPACE</span>
+<span style="background:#ede9fe;color:#5b21b6;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">WISE Sectoral – Co-Created · SKU 1</span>
+</div>
+<h3 style="margin-top:0;color:#5b21b6">Case 2: AEQUS — Apprenticeship Embedded Degree Programme (AEDP)</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>AEQUS Aerospace &amp; Auto Components</strong> | Belagavi SEZ, Karnataka | Precision aerospace manufacturing</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">30–40% shopfloor attrition; ITI workforce had no degree pathway; PF cost burden; 6–8 month ramp-up for precision aerospace roles; inability to retain trained talent</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">WISE AEDP: custom QP designed for AEQUS&#39;s precision aerospace SOPs (designed in 3 months). B.Voc Manufacturing Technology (3yr work-integrated). MAPL handled NAPS + PF exemption under EPFO 2022. Vishal Kulkarni (AVP Skill Dev, AEQUS) co-designed the QP.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">95%+ retention at 18 months</span><span class="metric">vs 60% industry avg</span><span class="metric">₹40L+ annual savings</span><span class="metric">Custom QP in 3 months</span><span class="metric">PF exempt via EPFO 2022</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 3: IP STAFFING — QUESS CORP LEAP -->
+<div class="card" style="border-left:4px solid var(--orange)">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:var(--orange);color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">IP STAFFING</span>
+<span style="background:var(--orange-soft);color:#92400e;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">WISE Staffing · SKU 3</span>
+</div>
+<h3 style="margin-top:0;color:#92400e">Case 3: Quess Corp LEAP — Credential-Led Staffing at Scale</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>Quess Corp (Quess Staffing)</strong> | India&#39;s largest workforce management company | 500K+ associates deployed pan-India</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">Frontline employees deployed across 100s of clients with no structured career pathway — high attrition, low engagement. Clients demanding more reliable, career-oriented workforce. Quess needed differentiator beyond volume placement.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">LEAP Programme (Learn &amp; Earn Associate Program) — scalable WISE model enabling deployed employees to pursue formal degrees while continuing to work across client sites. MSU managed all academic backend (curriculum, LMS, assessments, DigiLocker, ABC). MAPL supported payroll management for apprentices.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">3,000+ credentials in pilot year</span><span class="metric">Improved associate stickiness</span><span class="metric">Higher Quess client NPS</span><span class="metric">No disruption to client contracts</span><span class="metric">Model replicable across multi-sector base</span></td></tr>
+</tbody></table>
+<div style="background:var(--orange-soft);border-left:3px solid var(--orange);padding:10px 14px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82rem;font-style:italic;color:var(--text2)">"We are extremely proud to be associated with Medhavi Skills University for our LEAP Program. This is a fantastic program that not only benefits students by making them employment-ready but also supports industries in meeting their talent requirements effectively." <br><strong style="font-style:normal;color:#92400e">— Nitin Dave, CEO, Quess Staffing</strong></div>
+</div>
+
+<!-- CASE 4: IP STAFFING — BVG (RPL) -->
+<div class="card" style="border-left:4px solid #f59e0b">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#f59e0b;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">IP STAFFING – RPL</span>
+<span style="background:#fef3c7;color:#92400e;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">Skill Cert Non-Credit + WISE · SKU 14</span>
+</div>
+<h3 style="margin-top:0;color:#92400e">Case 4: BVG Skill Academy — RPL for Facilities Workforce</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>BVG India (Bharat Vikas Group)</strong> | Facilities Management &amp; Healthcare Support | One of India&#39;s largest service companies</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">Large facilities workforce (housekeeping, security, hospital support) with years of field experience but no formal qualifications — limiting career mobility, salary growth, and client confidence. Standard degree programmes inaccessible for deployed workforce.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">RPL (Recognition of Prior Learning) pathway: field experience converted into formal credit. SOP-aligned curriculum designed for BVG&#39;s facilities and healthcare support roles. Workers assessed on-site; credits awarded; formal certificate/diploma issued via DigiLocker. MAPL managed compliance and payroll.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">Credentials for existing workforce — zero disruption</span><span class="metric">Career pathways created for 1000s of workers</span><span class="metric">BVG client pitch enhanced</span><span class="metric">RPL model now template for other FM firms</span></td></tr>
+</tbody></table>
+<div style="background:#fef3c7;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82rem;font-style:italic;color:var(--text2)">"MSU&#39;s RPL-based approach is the right solution for our workforce — experienced people who deserve formal recognition for what they already know." <br><strong style="font-style:normal;color:#92400e">— Hanmantrao Gaikwad, Founder &amp; CMD, BVG India</strong></div>
+</div>
+
+<!-- CASE 5: EP SECTORAL — ORANE BEAUTY -->
+<div class="card" style="border-left:4px solid #ec4899">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#ec4899;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">EP SECTORAL</span>
+<span style="background:#fce7f3;color:#9d174d;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">Skill Certification – Standard · SKU 2</span>
+</div>
+<h3 style="margin-top:0;color:#9d174d">Case 5: ORANE International — UGC Credentials for Beauty &amp; Wellness Chain</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>ORANE International School of Hair, Beauty &amp; Wellness</strong> | Pan-India network of beauty institutes | Sector: Beauty, Wellness, Cosmetology</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">ORANE had strong delivery and a national network but no degree-granting authority. Students received only diplomas with limited employer credibility. Competition from UGC-recognised programmes was drawing students away. No pathway to formal degree for their learners.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">EP Sectoral partnership: ORANE programmes mapped to MSU&#39;s B.Voc in Beauty &amp; Wellness Management. MSU provided UGC-recognised degree issuance, DigiLocker credentials, ABC registration, and LMS for assessment delivery. Co-branded certification: ORANE + MSU.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">National beauty chain now issuing UGC degrees</span><span class="metric">Improved enrolment conversions</span><span class="metric">Alumni employability enhanced</span><span class="metric">NSQF-mapped credential pathway</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 6: EP AWARDING BODY — TESTBOOK/GUVI -->
+<div class="card" style="border-left:4px solid #6366f1">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#6366f1;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">EP AWARDING BODY</span>
+<span style="background:#e0e7ff;color:#3730a3;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">EdTech A|B · 141 Active Partners</span>
+</div>
+<h3 style="margin-top:0;color:#3730a3">Case 6: Testbook &amp; GUVI — EdTech Scale via MSU Awarding Body</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partners</td><td style="font-size:.83rem"><strong>Testbook Edu Solutions</strong> (govt exam prep, 3Cr+ users) &amp; <strong>GUVI Geek Network</strong> (IIT-M incubated, tech skilling) | EdTech Scale | Sector: IT, Government Exam Prep</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">EdTech platforms had massive learner bases and strong course delivery but lacked UGC-recognised degree issuance. Learners completing programmes received only platform certificates — no formal degree power. Building own university infrastructure is 5–10 year, ₹100Cr+ effort.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">EP Awarding Body (A|B) model: EdTech platforms continue designing and delivering their own courses entirely. MSU provides the academic backend — LMS integration, exam infrastructure, UGC degree issuance, DigiLocker credentials, ABC credit registration. Zero change to their delivery model.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">EdTech learners now receive UGC degrees</span><span class="metric">Zero infra investment for partners</span><span class="metric">Fast onboarding (weeks not years)</span><span class="metric">141 A|B partners replicate this model</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 7: IAC/HHM — JW MARRIOTT -->
+<div class="card" style="border-left:4px solid #06b6d4">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#06b6d4;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">IAC / HHM</span>
+<span style="background:#cffafe;color:#155e75;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">RTD – Industry as Campus · SKU 8</span>
+</div>
+<h3 style="margin-top:0;color:#155e75">Case 7: HHM — JW Marriott &amp; 5-Star Hotel Network (43 Partners)</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partners</td><td style="font-size:.83rem"><strong>JW Marriott · Crowne Plaza (3) · Radisson Blu · The Fern Group (8) · Sarovar Hotels (4) · Enrise by Sayaji (3) · Pride Hotels (3)</strong> + 22 more | 43 total hotel partners</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">Traditional hotel college graduates needed 6–12 months on-property ramp-up before being productive. Stipend during training = pure cost with zero output. High attrition after training. No formal degree while training. Recruitment cost ₹15,000–₹25,000 per hire.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">B.Sc. HHM (3yr: 3 months campus + 33 months inside live hotel). Student lives in hotel from month 4, earning stipend while working as productive team member. IIM Kozhikode management overlay. NAPS subsidy on stipend. Hotel is the campus, supervisor is the lecturer.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">100% placement on graduation</span><span class="metric">Day 1 productive (no ramp-up)</span><span class="metric">Zero recruitment cost</span><span class="metric">NAPS subsidy on stipend</span><span class="metric">IIM-K management overlay</span><span class="metric">43 hotels live</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 8: CRUX — WORKING PROFESSIONAL MBA -->
+<div class="card" style="border-left:4px solid #10b981">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#10b981;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">CRUX B2C</span>
+<span style="background:#d1fae5;color:#065f46;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">WISE-PLUS + RPL Higher Education · SKU 3</span>
+</div>
+<h3 style="margin-top:0;color:#065f46">Case 8: CRUX MBA — Working Professional Earns MBA Without Stopping Work</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Platform</td><td style="font-size:.83rem"><strong>CRUX — crux.msu.edu.in</strong> | B2C | Active in Delhi, Kolkata, Dhanbad | Channel Partners: Shine (Student Revenue) &amp; Shine (Assessment)</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Learner Profile</td><td style="font-size:.83rem">Working professional, 3–15 years experience, aspiring for MBA but unable to leave job. Traditional 2yr full-time MBA not feasible. Executive programmes too expensive. No RPL mechanism in regular universities.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">Accelerated Skill MBA (Pro) — 15 months via WISE-PLUS model. RPL credits for prior work experience reduce programme duration. Weekend + online delivery; no career disruption. UGC degree via DigiLocker. NCrF-aligned. Earn while you learn. Option: Work-Integrated MBA (24m) for deeper engagement.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Programmes</td><td style="font-size:.83rem"><span class="tag">Accelerated Skill MBA (Pro) – 15 months</span><span class="tag">Work-Integrated MBA (Pro) – 24 months</span><span class="tag">MA Psychology</span><span class="tag">MA Child Psychology</span><span class="tag">PGD Counselling &amp; Psychotherapy</span></td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">UGC MBA in 15 months (fastest in India)</span><span class="metric">Zero career disruption</span><span class="metric">RPL credits for experience</span><span class="metric">Active in 3 cities</span><span class="metric">NEP 2020 + NCrF aligned</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 9: IP CORPORATE — NEXUS SELECT TRUST (AARUNYA) -->
+<div class="card" style="border-left:4px solid #22c55e">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:#22c55e;color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">IP CORPORATE – CSR</span>
+<span style="background:#dcfce7;color:#14532d;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">Industry WISE Co-Created – CSR Funded · SKU 4</span>
+</div>
+<h3 style="margin-top:0;color:#14532d">Case 9: Aarunya Initiative — Nexus Select Trust (India&#39;s First Mall Management WISE)</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>Nexus Select Trust</strong> | India&#39;s largest mall REIT | 17 Grade-A malls across India | Retail, Facilities, F&amp;B workforce</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">Mall operations staff (retail associates, facility managers, F&amp;B crew) had zero formal qualification pathway for their specific roles. High churn among trained staff. No credential recognition for mall-specific competencies. Nexus wanted to use CSR budget for workforce development.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">India&#39;s FIRST mall management WISE degree. Custom QP designed for mall-specific roles (retail ops, facilities, F&amp;B service). Mall operations become the WISE campus. Funded entirely under Schedule VII CSR by Nexus Select Trust. Certificate → B.Voc Retail / Facilities Management pathway.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">India&#39;s FIRST mall management degree</span><span class="metric">CSR-funded (Schedule VII)</span><span class="metric">National media coverage</span><span class="metric">Scaling to all 17 Nexus malls</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 10: MAPL MANUFACTURING — SUPRAJIT/ENDURANCE -->
+<div class="card" style="border-left:4px solid var(--blue2)">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:var(--blue2);color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">MAPL MANUFACTURING</span>
+<span style="background:var(--blue-soft);color:var(--blue2);border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">RTD Skill Cert + NAPS · SKU 9</span>
+</div>
+<h3 style="margin-top:0;color:var(--blue3)">Case 10: Auto Ancillary Cluster — NAPS at Scale (Suprajit + Endurance + 40+ Units)</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Clients</td><td style="font-size:.83rem"><strong>Suprajit Engineering (9 units) · Endurance Technologies (10+ units) · Federal Mogul Goetza · Mahindra &amp; Mahindra · Hyundai Motor India · Ashok Leyland · TVS Srichakra (2 units)</strong> and 30+ more MAPL auto clients</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">Auto ancillary manufacturers facing: (a) PF compliance cost on contract workforce, (b) no structured training for shopfloor workforce, (c) high ITI workforce attrition, (d) NAPS compliance complexity preventing stipend subsidy capture.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MAPL Solution</td><td style="font-size:.83rem">MAPL handles complete NAPS/NATS compliance — Apprenticeship India Portal filing, GoI stipend subsidy (25%), EPFO 2022 PF exemption for apprentices. MSU provides skill certification programme + WISE pathway for long-tenure workforce. RTD model: MAPL sources + MSU credentials + deployed to client.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">100+ manufacturing units covered</span><span class="metric">25% stipend subsidy captured</span><span class="metric">PF exempt on apprentices</span><span class="metric">NAPS active across 44 MAPL clients</span><span class="metric">Structured training for shopfloor workforce</span></td></tr>
+</tbody></table>
+</div>
+
+<!-- CASE 11: EP SECTORAL — DEFENCE (2 GUARDS HISAR) -->
+<div class="card" style="border-left:4px solid var(--blue3)">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<span style="background:var(--blue3);color:#fff;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700">EP A|B – DEFENCE / GOVT</span>
+<span style="background:var(--blue-soft);color:var(--blue3);border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:600">Skill Certification Non-Credit · SKU 14</span>
+</div>
+<h3 style="margin-top:0;color:var(--blue3)">Case 11: 2 Guards, Hisar Military Station — Credential for Serving Personnel</h3>
+<table><tbody>
+<tr><td style="color:var(--muted);width:110px;padding:5px 12px 5px 0;font-size:.8rem">Partner</td><td style="font-size:.83rem"><strong>2 Guards – Hisar Military Station, Indian Army</strong> + Embassy of India, Kathmandu + Kendriya Bhandar | Defence &amp; Government sector</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Problem</td><td style="font-size:.83rem">Serving military personnel and government employees undergo extensive skills training but receive no formal civilian-recognised academic credential. Post-service employability limited. Upskilling programmes needed UGC-recognised certification.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">MSU Solution</td><td style="font-size:.83rem">MSU Awarding Body (A|B) model: Military station designs and delivers its own training programme; MSU issues UGC-recognised certificate/diploma. DigiLocker credential portable for post-service employment. Applicable across all defence establishments via the same model.</td></tr>
+<tr><td style="color:var(--muted);padding:5px 12px 5px 0;font-size:.8rem">Results</td><td style="font-size:.83rem"><span class="metric">India&#39;s Army units now issuing UGC credentials</span><span class="metric">Embassy of India, Kathmandu — unique govt A|B</span><span class="metric">Post-service employability improved</span><span class="metric">Template for all defence establishments</span></td></tr>
+</tbody></table>
+</div>
+
+</div>
+
+<!-- PHILOSOPHY -->
+<!-- PHILOSOPHY -->
+<div id="philosophy" class="sec">
+<h2>First Industry Approach — 7 Principles</h2>
+<div class="card"><p>MSU's operating philosophy is built on the idea that <span class="glow-text">industry is the primary customer of education</span> — not a downstream recipient. Every academic decision starts with industry's need.</p></div>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)"><h4>1. Industry-Designed Curriculum</h4><p>QPs and curricula co-created with industry partners. SSC QPs as baseline; custom QPs for sector-specific needs. No academic lag. Annual refresh cycle.</p></div>
+<div class="cc" style="border-left-color:var(--blue2)"><h4>2. Industry as Campus</h4><p>80–90% learning at the workplace. Supervisors as mentors. OJT Logbook as primary assessment. Real output = real learning.</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>3. Credential Portability</h4><p>DigiLocker-backed + ABC-stacked + NSQF-mapped. Learner owns credential. No institution lock-in. Internationally portable.</p></div>
+<div class="cc" style="border-left-color:var(--blue2)"><h4>4. Financial Neutrality</h4><p>GST-exempt, PF-exempt, NAPS-subsidised = zero incremental cost burden on industry vs. regular hiring. Plus CSR eligibility.</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>5. Ecosystem Neutrality</h4><p>MSU works across SSCs, NSDC, UGC, MSDE, and private sector. Not captured by any single ecosystem. Widest compatibility.</p></div>
+<div class="cc" style="border-left-color:var(--blue2)"><h4>6. Scale by Design</h4><p>Asset-light model. LMS + partner network = infinite scale. No new campuses needed. Every partner site is an MSU campus.</p></div>
+<div class="cc" style="border-left-color:var(--blue)"><h4>7. Learner Centricity</h4><p>Every decision optimised for learner employment outcomes. Earn-while-you-learn. RPL for experience. No dropout risk from financial pressure.</p></div>
+</div>
+</div>
+
+<!-- PARTNERS -->
+<div id="partners" class="sec">
+<h2>Partner Database</h2>
+<input type="text" class="srch" id="partSearch" placeholder="Search partner name, category, sector..." oninput="filterPart()">
+<div style="overflow-x:auto">
+<table id="partT"><thead><tr><th>Partner</th><th>Category</th><th>Engagement</th><th>Sector</th></tr></thead><tbody>
+<tr><td>Quess Corp</td><td>IP — Staffing</td><td>LEAP Programme, WISE credentials</td><td>Cross-sector</td></tr>
+<tr><td>BVG Skill Academy</td><td>IP — Staffing / EP</td><td>WISE, credential, skilling</td><td>Facilities, Healthcare</td></tr>
+<tr><td>AEQUS</td><td>IP — Corporate</td><td>AEDP, Custom QP</td><td>Aerospace, Auto</td></tr>
+<tr><td>Nexus Select Trust</td><td>IP — Corporate</td><td>Aarunya Initiative, WISE</td><td>Retail, Facilities</td></tr>
+<tr><td>Barbeque Nation</td><td>IP — Corporate</td><td>WISE B.Voc/D.Voc, 700+ trained</td><td>QSR / F&amp;B</td></tr>
+<tr><td>Suprajit Engineering (9 units)</td><td>MAPL Client</td><td>Workforce, NAPS, WISE</td><td>Automotive</td></tr>
+<tr><td>Endurance Technologies (10+ units)</td><td>MAPL Client</td><td>Workforce deployment</td><td>Automotive</td></tr>
+<tr><td>Dixon Technologies</td><td>MAPL Client + IP</td><td>Workforce, WISE, skilling</td><td>Electronics</td></tr>
+<tr><td>Hyundai Motor India</td><td>MAPL Client</td><td>Workforce deployment</td><td>Automotive</td></tr>
+<tr><td>Mahindra &amp; Mahindra</td><td>MAPL Client</td><td>Workforce deployment</td><td>Automotive</td></tr>
+<tr><td>Ashok Leyland</td><td>MAPL Client</td><td>Workforce deployment</td><td>Automotive</td></tr>
+<tr><td>TVS Srichakra (2 units)</td><td>MAPL Client</td><td>Workforce deployment</td><td>Automotive</td></tr>
+<tr><td>Varun Beverages (PepsiCo)</td><td>MAPL Client</td><td>Workforce deployment</td><td>FMCG</td></tr>
+<tr><td>Britannia Industries</td><td>MAPL Client</td><td>Workforce deployment</td><td>FMCG</td></tr>
+<tr><td>Mediforce Healthcare (3 units)</td><td>MAPL Client</td><td>Workforce, skilling</td><td>Healthcare</td></tr>
+<tr><td>JW Marriott</td><td>IAC — Hotel</td><td>HHM WISE B.Sc.</td><td>Hospitality</td></tr>
+<tr><td>Crowne Plaza (3 properties)</td><td>IAC — Hotel</td><td>HHM WISE B.Sc.</td><td>Hospitality</td></tr>
+<tr><td>The Fern Hotels (8)</td><td>IAC — Hotel</td><td>HHM WISE B.Sc.</td><td>Hospitality</td></tr>
+<tr><td>Sarovar Hotels (4)</td><td>IAC — Hotel</td><td>HHM WISE B.Sc.</td><td>Hospitality</td></tr>
+<tr><td>Enrise by Sayaji (3)</td><td>IAC — Hotel</td><td>HHM WISE B.Sc.</td><td>Hospitality</td></tr>
+<tr><td>Pride Hotels (3)</td><td>IAC — Hotel</td><td>HHM WISE B.Sc.</td><td>Hospitality</td></tr>
+<tr><td>Radisson Blu Greater Noida</td><td>IAC — Hotel</td><td>HHM WISE</td><td>Hospitality</td></tr>
+<tr><td>Lemon Tree Motihari</td><td>IAC — Hotel</td><td>HHM WISE</td><td>Hospitality</td></tr>
+<tr><td>Airgo Aviation</td><td>EP / WISE</td><td>Aviation programme delivery</td><td>Aviation</td></tr>
+<tr><td>Skytech Aviation</td><td>EP / WISE</td><td>Aviation programme delivery</td><td>Aviation</td></tr>
+<tr><td>GD Goenka</td><td>EP — Sectoral</td><td>Healthcare + multi-sector delivery</td><td>Healthcare / Multi</td></tr>
+<tr><td>IMS Proschool</td><td>EP — Sectoral</td><td>BFSI programme delivery</td><td>BFSI</td></tr>
+<tr><td>ORANE International</td><td>EP — Sectoral</td><td>Beauty &amp; Wellness delivery</td><td>Beauty</td></tr>
+<tr><td>IMI Kolkata</td><td>EP — Premium</td><td>Management programme delivery</td><td>Management</td></tr>
+<tr><td>OP Jindal Community College</td><td>EP — Premium</td><td>Vocational credential</td><td>Multi</td></tr>
+<tr><td>Testbook</td><td>EP — Awarding Body</td><td>Digital skilling credential</td><td>EdTech</td></tr>
+<tr><td>GUVI Geek Network</td><td>EP — Awarding Body</td><td>Tech skilling credential</td><td>IT / EdTech</td></tr>
+<tr><td>Intellipaat</td><td>EP — Awarding Body</td><td>AI / Tech certification</td><td>IT / AI</td></tr>
+<tr><td>Acciojob</td><td>EP — Awarding Body</td><td>Tech placement + credential</td><td>IT</td></tr>
+<tr><td>Care Skills Academy</td><td>EP — Awarding Body</td><td>Healthcare skilling</td><td>Healthcare</td></tr>
+<tr><td>Drama Schools Foundation Mumbai</td><td>EP — Awarding Body</td><td>Performing arts credential</td><td>Creative Arts</td></tr>
+<tr><td>IIM Kozhikode</td><td>Academic Alliance</td><td>HHM management curriculum</td><td>Hospitality / Mgmt</td></tr>
+<tr><td>LabourNet Services India</td><td>IP — Staffing</td><td>Workforce development</td><td>Cross-sector</td></tr>
+<tr><td>Firstmeridian Global</td><td>IP — Staffing</td><td>Credential-led staffing</td><td>Cross-sector</td></tr>
+<tr><td>Layam Flexi Solutions</td><td>IP — Staffing</td><td>Frontline talent pipeline</td><td>Manufacturing</td></tr>
+<tr><td>Chai Point</td><td>IP — Corporate</td><td>WISE / credential</td><td>QSR / F&amp;B</td></tr>
+<tr><td>Arvind Textiles</td><td>IP — Corporate</td><td>WISE / credential</td><td>Textile</td></tr>
+<tr><td>Century Plyboard</td><td>IP — Corporate</td><td>WISE / credential</td><td>Manufacturing</td></tr>
+<tr><td>Nephrocare Health Services</td><td>IP — Corporate</td><td>Healthcare workforce credentialing</td><td>Healthcare</td></tr>
+<tr><td>Shine (Student Revenue)</td><td>CRUX Channel</td><td>Lead generation for CRUX</td><td>EdTech</td></tr>
+<tr><td>Shine (Assessment)</td><td>CRUX Channel</td><td>Assessment partner</td><td>EdTech</td></tr>
+<tr><td>Gramin Shiksha</td><td>EP — WISE</td><td>Rural skilling delivery</td><td>Agriculture / Rural</td></tr>
+<tr><td>Navriti Technologies</td><td>EP — WISE</td><td>Digital skills delivery</td><td>IT</td></tr>
+<tr><td>Ambuja Foundation</td><td>EP — CSR</td><td>CSR-funded skilling</td><td>Construction / Rural</td></tr>
+<tr><td>Wockhardt Foundation</td><td>EP — CSR</td><td>Healthcare CSR skilling</td><td>Healthcare</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- GLOSSARY -->
+<div id="glossary" class="sec">
+<h2>Official Glossary</h2>
+<input type="text" class="srch" id="glosSearch" placeholder="Search term or acronym..." oninput="filterGlos()">
+<div style="overflow-x:auto">
+<table id="glosT"><thead><tr><th>Term</th><th>Full Form</th><th>Definition</th></tr></thead><tbody>
+<tr><td><strong>WISE</strong></td><td>Work-Integrated Skilling &amp; Education</td><td>MSU's flagship model. Learners work inside industry while earning a UGC degree. 80–90% OJT + 10% academic.</td></tr>
+<tr><td><strong>WISE-PLUS</strong></td><td>WISE for Working Professionals</td><td>CRUX delivery — part-time, online, RPL-enabled. No need to leave job. Weekend LMS + proctored online exams.</td></tr>
+<tr><td><strong>IP</strong></td><td>Industry Partnership</td><td>B2B — MSU directly credentials workforce of corporates and staffing companies.</td></tr>
+<tr><td><strong>EP</strong></td><td>Education Partnership</td><td>B2B — MSU empowers training institutes and EdTech platforms with UGC-recognised credentials.</td></tr>
+<tr><td><strong>IAC</strong></td><td>Industry as Campus</td><td>Industry operational environment IS the classroom. Hotel, factory, mall = learning site.</td></tr>
+<tr><td><strong>HHM</strong></td><td>Hotel &amp; Hospitality Management</td><td>3-year B.Sc. delivered inside live hotel operations. 43 active hotel partners. IIM Kozhikode tie-up.</td></tr>
+<tr><td><strong>CRUX</strong></td><td>Centre for Reskilling, Upskilling &amp; Extension</td><td>MSU's B2C working-professional platform. MBA + Psychology PG programmes. crux.msu.edu.in.</td></tr>
+<tr><td><strong>MAPL</strong></td><td>Medhavi Advance Professionals Ltd.</td><td>MSU's commercial workforce arm — staffing, payroll, NAPS/NATS, RTD for 44 direct clients.</td></tr>
+<tr><td><strong>AEDP</strong></td><td>Apprenticeship Embedded Degree Programme</td><td>Degree + apprenticeship co-delivered. Flagship: AEQUS Aerospace.</td></tr>
+<tr><td><strong>LEAP</strong></td><td>Learn &amp; Earn Associate Program</td><td>Quess Corp partnership. Associates placed at client sites; MSU credentials via WISE. 3,000+ in pilot year.</td></tr>
+<tr><td><strong>NAPS</strong></td><td>National Apprenticeship Promotion Scheme</td><td>Govt reimburses 25% of stipend (max ₹1,500/month per apprentice) to employer. MAPL-managed.</td></tr>
+<tr><td><strong>NATS</strong></td><td>National Apprenticeship Training Scheme</td><td>BOAT-administered scheme for fresher graduates. 1-year technical training. MAPL handles filing.</td></tr>
+<tr><td><strong>QP</strong></td><td>Qualification Pack</td><td>NSDC/SSC-defined set of National Occupational Standards for a job role. Basis of WISE curriculum.</td></tr>
+<tr><td><strong>NOS</strong></td><td>National Occupational Standards</td><td>Performance criteria + knowledge requirements for a specific task. Component of a QP.</td></tr>
+<tr><td><strong>RPL</strong></td><td>Recognition of Prior Learning</td><td>Formal assessment and certification of competencies from informal/non-formal work experience.</td></tr>
+<tr><td><strong>ABC</strong></td><td>Academic Bank of Credits</td><td>NEP 2020. ABCID linked to Aadhaar. Credits stackable across institutions throughout career.</td></tr>
+<tr><td><strong>NSQF</strong></td><td>National Skills Qualifications Framework</td><td>10-level framework. WISE programmes mapped to levels 4–7. National + international recognition.</td></tr>
+<tr><td><strong>NHEQF</strong></td><td>National Higher Education Qualifications Framework</td><td>UGC framework for HE qualifications. MSU degrees mapped for academic equivalence.</td></tr>
+<tr><td><strong>NCrF</strong></td><td>National Credit Framework</td><td>Unified framework integrating NSQF + NHEQF. Seamless credit transfer between skill and academic.</td></tr>
+<tr><td><strong>SIDH</strong></td><td>Skill India Digital Hub</td><td>NSDC's digital platform. MSU learners visible to 5L+ registered employers nationwide.</td></tr>
+<tr><td><strong>OJT</strong></td><td>On-the-Job Training</td><td>Structured workplace learning — 80–90% of WISE programme. Tracked via digital OJT Logbook.</td></tr>
+<tr><td><strong>RTD</strong></td><td>Recruit-Train-Deploy</td><td>MAPL's end-to-end talent service: source → train to client spec → deploy with credential.</td></tr>
+<tr><td><strong>B.Voc.</strong></td><td>Bachelor of Vocation</td><td>UGC-recognised 3-year vocational degree. Multiple exit points (Diploma / D.Voc / Degree).</td></tr>
+<tr><td><strong>D.Voc.</strong></td><td>Diploma of Vocation</td><td>2-year exit credential from B.Voc. pathway. NSQF Level 5. Employment-ready at exit.</td></tr>
+<tr><td><strong>R&amp;R</strong></td><td>Recognition &amp; Reward</td><td>Formal workplace ceremony recognising WISE learner achievements. Employer-led. Drives retention.</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- Q&A -->
+<div id="qa" class="sec">
+<h2>Q&amp;A Knowledge Engine</h2>
+<input type="text" class="srch" id="qaSearch" placeholder="Ask anything about MSU..." oninput="filterQA()">
+<div id="qaBox"></div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="sec">
+<h2>Contact &amp; Key Links</h2>
+<div class="g2">
+<div class="card"><h3>Medhavi Skills University</h3>
+<p>Sector 20B, DDU Nagar, Bilaspur<br>Chhattisgarh — 495001, India<br><br>
+📧 <a href="mailto:info@msu.edu.in">info@msu.edu.in</a><br>
+🌐 <a href="https://msu.edu.in">msu.edu.in</a><br>
+📚 <a href="https://lms.msu.edu.in">lms.msu.edu.in</a><br>
+🎯 <a href="https://crux.msu.edu.in">crux.msu.edu.in</a></p></div>
+<div class="card"><h3>Quick Links</h3>
+<p>🏅 <a href="https://digilocker.gov.in">DigiLocker</a><br>
+📋 <a href="https://apprenticeship.gov.in">NAPS Portal</a><br>
+🏦 <a href="https://www.abc.gov.in">Academic Bank of Credits</a><br>
+💼 <a href="https://www.linkedin.com/school/medhavi-skills-university">LinkedIn</a><br>
+🏛️ <a href="https://www.ugc.gov.in">UGC</a></p></div>
+</div>
+<div class="card"><h3>Enquiry Channels</h3>
+<table><thead><tr><th>You Are</th><th>Contact Route</th><th>Email</th></tr></thead><tbody>
+<tr><td>Corporate HR / L&amp;D Head</td><td>IP Team</td><td>industry@msu.edu.in</td></tr>
+<tr><td>Staffing Company</td><td>MAPL BD Team</td><td>mapl@msu.edu.in</td></tr>
+<tr><td>Training Institute / EdTech</td><td>EP Team</td><td>edpartner@msu.edu.in</td></tr>
+<tr><td>Hotel / Hospitality Brand</td><td>HHM Team</td><td>hhm@msu.edu.in</td></tr>
+<tr><td>Working Professional</td><td>CRUX Admissions</td><td>admissions@crux.msu.edu.in</td></tr>
+<tr><td>Fresh Graduate</td><td>Admissions</td><td>admissions@msu.edu.in</td></tr>
+<tr><td>Investor / Media</td><td>Communications</td><td>comms@msu.edu.in</td></tr>
+</tbody></table>
+</div>
+<div class="card" style="text-align:center;padding:36px">
+<p style="font-size:1.35rem;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">India's Fastest-Growing Work-Integrated Skills University</p>
+<p style="color:var(--muted);margin-top:8px">Where Industry IS the Campus</p>
+</div>
+</div>
+
+
+<!-- ACADEMIC PRODUCT REPOSITORY -->
+<div id="academic" class="sec">
+<h2>Academic Product Repository</h2>
+<div class="card" style="background:linear-gradient(135deg,#f0f8fd,#fffbf5)">
+<p style="font-size:.92rem;font-weight:500;color:var(--text)">MSU&#39;s complete academic product catalogue covering <strong>100+ WISE degree programmes</strong> across 10 Schools, <strong>15 NCVET/NSQF qualifications</strong> in emerging sectors, and <strong>240+ NHEQF short/long-term courses</strong> delivered via 25+ accredited partners. All programmes are NCrF-aligned, ABC-credited, and DigiLocker-issued.</p>
+</div>
+
+<h3>NCrF Framework</h3>
+<div class="card">
+<div class="g2">
+<div>
+<h4 style="color:var(--blue2)">What is NCrF?</h4>
+<p style="font-size:.82rem;color:var(--text2)">National Credit Framework jointly developed by MoE, MSDE, UGC, AICTE, NCVET, NCERT. Notified by UGC on 10 April 2023. Integrates School Education, Higher/Technical Education, and Vocational Education into a single credit system.</p>
+<p style="font-size:.82rem;color:var(--text2)"><strong>1,200 hours = 40 credits = 1 Level</strong>. 30 hours per credit. Credits earned from classroom, lab, OJT, online, apprenticeship, internship, and community work.</p>
+</div>
+<div>
+<h4 style="color:var(--orange)">Level to Qualification Mapping</h4>
+<div class="os"><strong>Level 4 (Class XII equivalent)</strong> &#8594; D.Voc, ITI, 10th+2yr work</div>
+<div class="os"><strong>Level 4.5 (UG Certificate)</strong> &#8594; Exit after 1yr UG / STT Certificate</div>
+<div class="os"><strong>Level 5 (UG Diploma)</strong> &#8594; Exit after 2yr UG / LTT Diploma</div>
+<div class="os"><strong>Level 5.5 (B.Voc Degree)</strong> &#8594; 3-year work-integrated degree</div>
+<div class="os"><strong>Level 6 (B.Tech / PGD)</strong> &#8594; 4-year engineering or PG Diploma</div>
+<div class="os"><strong>Level 6.5 (MBA / M.Voc)</strong> &#8594; 2-year masters</div>
+<div class="os"><strong>Level 8 (Doctoral)</strong> &#8594; PhD / Research programmes</div>
+</div>
+</div>
+</div>
+
+<h3>WISE Programmes by School</h3>
+<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">All WISE programmes are work-integrated, NCrF-aligned, UGC-recognised, deliverable via OJT + LMS + campus blend. Eligible for NAPS stipend subsidy. Credits stackable via ABC.</p>
+
+<h4 style="color:var(--blue2);margin-bottom:8px">School of Engineering and Technology</h4>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>Type</th><th>Specialisation</th><th>NCrF Level</th><th>Duration</th><th>Eligibility</th></tr></thead>
+<tbody>
+<tr><td>D.Voc</td><td>Automobile Technology</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>D.Voc</td><td>Production Technology</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>D.Voc</td><td>Manufacturing Technology</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>D.Voc</td><td>Electronics &amp; Electrical Technology</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>Flexi-MoU (CTS)</td><td>Automotive Manufacturing Technician</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>Flexi-MoU (CTS)</td><td>Industrial Electrician</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>Flexi-MoU (CTS)</td><td>Industrial Fitter</td><td>4</td><td>2 yrs</td><td>10th Pass</td></tr>
+<tr><td>B.Voc</td><td>Automotive Manufacturing Technology</td><td>5.5</td><td>3 yrs</td><td>12th Pass</td></tr>
+<tr><td>B.Voc</td><td>Electrical Technology</td><td>5.5</td><td>3 yrs</td><td>12th Pass</td></tr>
+<tr><td>B.Voc</td><td>Electronics Manufacturing Services</td><td>5.5</td><td>3 yrs</td><td>12th Pass</td></tr>
+<tr><td>B.Voc</td><td>Manufacturing Technology</td><td>5.5</td><td>3 yrs</td><td>12th Pass</td></tr>
+<tr><td>B.Voc</td><td>Manufacturing Technology - Aerospace</td><td>5.5</td><td>3 yrs</td><td>12th Pass</td></tr>
+<tr><td>B.Voc</td><td>Fire Technology &amp; Industrial Safety</td><td>5.5</td><td>3 yrs</td><td>12th Pass</td></tr>
+<tr><td>PGD</td><td>Industrial Safety Management</td><td>6</td><td>1 yr</td><td>Graduate</td></tr>
+</tbody></table>
+</div>
+
+<h4 style="color:var(--blue2);margin:16px 0 8px">School of Management and Commerce</h4>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>Type</th><th>Specialisations</th><th>NCrF Level</th><th>Duration</th></tr></thead>
+<tbody>
+<tr><td>D.Voc</td><td>Facility Services</td><td>4</td><td>2 yrs</td></tr>
+<tr><td>B.Voc</td><td>HR Management, Logistics &amp; SCM, Marketing Management, BFSI, Business Process Management, Finance Management, Accounts &amp; Taxation, Facilities Management, Retail Operations, Operations Management</td><td>5.5</td><td>3 yrs</td></tr>
+<tr><td>BBA</td><td>Jewelry Design &amp; Management, Logistics &amp; SCM, Retail Management, Entrepreneurship &amp; Technology Management</td><td>5.5</td><td>3 yrs</td></tr>
+<tr><td>MBA</td><td>Design Management, Entrepreneurship &amp; Innovation, Finance, Healthcare &amp; Hospital Management, HRM, IT, Leadership &amp; Strategy, Logistics &amp; SCM, Marketing, Operations Management, Retail, Strategic Finance, Technology Management</td><td>6.5</td><td>2 yrs</td></tr>
+<tr><td>M.Voc</td><td>Integrated Services Management, Finance Management, HR Management, Operations Management, Retail Management, BFSI, Professional Accounting</td><td>6.5</td><td>2 yrs</td></tr>
+<tr><td>PGD</td><td>Management, Finance, Logistics &amp; SCM, Marketing, Operations, Retail, Business Analytics, CRM, HRM</td><td>6</td><td>1 yr</td></tr>
+</tbody></table>
+</div>
+
+<h4 style="color:var(--blue2);margin:16px 0 8px">School of Health Science and Technology</h4>
+<div class="cgrid">
+<div class="cc"><h4>B.Voc Programmes (NCrF 5.5, 3 yrs)</h4><p>Cardiac Care Technology, Dialysis Technology, Emergency Medical Technology, Hospital Administration, Hospital Sterilization Technology, Medical Laboratory Technology, Nursing Care, Operation Theatre Technology, Yoga &amp; Naturopathy, Patient Care Management, Radiology &amp; Imaging Technology, Nutrition &amp; Dietetics, Optometry</p></div>
+<div class="cc"><h4>Postgraduate Programmes</h4><p><strong>M.Voc:</strong> Hospital Administration (NCrF 6.5, 2 yrs)<br><strong>PGD:</strong> Hospital Management (NCrF 6, 1 yr)</p></div>
+</div>
+
+<h4 style="color:var(--blue2);margin:16px 0 8px">Other Schools</h4>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>School</th><th>Programmes</th><th>Types</th><th>NCrF Level</th></tr></thead>
+<tbody>
+<tr><td>Hospitality &amp; Tourism</td><td>D.Voc Hospitality Operations, B.Voc Hospitality &amp; Restaurant Ops, B.Voc HHM, B.Voc Tourism &amp; Hospitality, BSc HHM, PGD Tourism</td><td>D.Voc / B.Voc / BSc / PGD</td><td>4-6</td></tr>
+<tr><td>Art, Design &amp; Media</td><td>B.Voc Animation &amp; VFX, B.Voc Fashion Design, BA Media &amp; Marketing Communication</td><td>B.Voc / BA</td><td>5.5</td></tr>
+<tr><td>Beauty &amp; Wellness</td><td>B.Voc Aesthetics &amp; Skincare, B.Voc Cosmetology</td><td>B.Voc</td><td>5.5</td></tr>
+<tr><td>Computer Science</td><td>B.Voc Information Technology, BCA AI &amp; ML, BCA Full Stack Development, B.Tech Computer Science, B.Tech CS (AI &amp; ML), M.Voc IT &amp; Business Analytics, PGD IT</td><td>B.Voc / BCA / B.Tech / M.Voc / PGD</td><td>5.5-6.5</td></tr>
+<tr><td>Psychology</td><td>MA Child Psychology, MA Psychology, PGD Psychological Well-Being, PGD Counselling &amp; Psychotherapy, PGD Guidance &amp; Counselling, PGD Organisational Psychology</td><td>MA / PGD</td><td>6-6.5</td></tr>
+<tr><td>Applied Science</td><td>D.Voc Confectionery Processing, B.Voc Food Processing Technology</td><td>D.Voc / B.Voc</td><td>4-5.5</td></tr>
+</tbody></table>
+</div>
+
+<h3>NCVET / NSQF Qualifications</h3>
+<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">MSU is the 2nd university in India to become an NCVET Awarding Body. These qualifications are approved by NCVET/MSDE and are NSQF-aligned. 50+ QPs developed across sectors.</p>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>Sector</th><th>Qualification</th><th>NCrF Level</th><th>Hours</th><th>Credits</th></tr></thead>
+<tbody>
+<tr><td>Electronics</td><td>Introduction to Semiconductors &amp; ICs</td><td>3.5</td><td>60</td><td>2</td></tr>
+<tr><td>Food Industry</td><td>Large Cardamom Organic Cultivation &amp; Management</td><td>4</td><td>480</td><td>16</td></tr>
+<tr><td>Tourism &amp; Hospitality</td><td>Rural Tourism Entrepreneur</td><td>4.5</td><td>540</td><td>18</td></tr>
+<tr><td>IT-ITeS</td><td>Digital Content Developer</td><td>4.5</td><td>570</td><td>19</td></tr>
+<tr><td>IT-ITeS</td><td>Digital Communication &amp; Collaboration Associate</td><td>4.5</td><td>570</td><td>19</td></tr>
+<tr><td>IT-ITeS</td><td>Web Video Production and Editing</td><td>4.5</td><td>570</td><td>19</td></tr>
+<tr><td>Electronics</td><td>Semiconductor IC Design Associate</td><td>4.5</td><td>540</td><td>18</td></tr>
+<tr><td>Retail</td><td>Retail Services - Luxury Segment</td><td>4.5</td><td>30</td><td>1</td></tr>
+<tr><td>Automotive</td><td>Supervisor - 2 &amp; 3 Wheeler EV Services</td><td>5</td><td>540</td><td>18</td></tr>
+<tr><td>Management</td><td>Vedic Mathematics Trainer</td><td>5</td><td>570</td><td>19</td></tr>
+<tr><td>Retail</td><td>Basics of Luxury Brand Management</td><td>5</td><td>30</td><td>1</td></tr>
+<tr><td>Tourism &amp; Hospitality</td><td>Sustainable Tourism Manager</td><td>5.5</td><td>570</td><td>19</td></tr>
+<tr><td>Logistics</td><td>Last Mile Delivery Supervisor</td><td>5.5</td><td>600</td><td>20</td></tr>
+<tr><td>IT-ITeS</td><td>AI Ethics Specialist</td><td>6</td><td>720</td><td>24</td></tr>
+<tr><td>Electronics</td><td>Semiconductor IC Design &amp; Verification Professional</td><td>6</td><td>690</td><td>23</td></tr>
+</tbody></table>
+</div>
+
+<h3>NHEQF Courses - 240+ Partner-Delivered Qualifications</h3>
+<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">Designed and delivered by MSU accredited EP partners under the NHEQF. MSU issues all credentials. Structured as Certificates, Professional Diplomas, Advanced Professional Diplomas, and PG Diplomas.</p>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>IT and Computer Science (50+ courses)</h4>
+<p><strong>Partners:</strong> G-TEC Education, Coding Ninja, Smart Bridge, Aspire, Vats Institute, NISE, DIITAL Education LLP, IMS Proschool, Acciojob</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Cloud Computing, Full Stack (MERN/MEAN/React/.NET/JAVA/Flutter/PHP/Python), Data Science, AI/ML, Cyber Security, Robotics, ServiceNow, Salesforce, Software Testing, Database, BI, Web Development</p>
+</div>
+<div class="cc" style="border-left-color:#6366f1">
+<h4>Law and Legal (30+ courses)</h4>
+<p><strong>Partner:</strong> Law Sikho-NSDC</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Corporate Law, IP Law, Labour &amp; Employment Law, US Corporate Law, International Arbitration, Banking &amp; Finance Law, Contract Drafting, Paralegal Studies, Media &amp; Entertainment Law, Sports Law, Legal English</p>
+</div>
+<div class="cc" style="border-left-color:#10b981">
+<h4>BFSI and Finance (25+ courses)</h4>
+<p><strong>Partners:</strong> IMS Proschool, Testbook (Plutus), Smart Institute, G-TEC, Vats Institute, DGGURU/MentorKart</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Financial Modelling, Investment Banking, Securities Markets, Financial Planning, International Accounting (ACCA), Business Analytics, Equity Derivatives, CFA modules, PG Diploma Finance</p>
+</div>
+<div class="cc" style="border-left-color:#ec4899">
+<h4>Beauty, Wellness and Healthcare</h4>
+<p><strong>Partners:</strong> NIF Global, Gramin Shiksha, Swasthgram, IIRDC, Doctorials Academy, Transorze/TIPS</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Makeup &amp; Hair, Spa Therapy, Panchkarma, Phlebotomy, Hospital Administration, Medical Coding, Medical Transcription, Healthcare Documentation, Hospital Management PGD, Quality Management</p>
+</div>
+<div class="cc" style="border-left-color:#f59e0b">
+<h4>Gems and Jewellery (9 courses)</h4>
+<p><strong>Partner:</strong> GJA - The Gem &amp; Jewellery Academy</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Gold Valuation, CAD Jewellery Design, Diamond Grading, Gem Identification, Manual Jewellery Design - professional and advanced diplomas</p>
+</div>
+<div class="cc" style="border-left-color:#8b5cf6">
+<h4>Media, Design and Gaming</h4>
+<p><strong>Partners:</strong> Gamer2Maker, G-TEC, Law Sikho, Transorze</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Game Art 2D/3D, Game Design, Game Programming, Digital Marketing, Animation &amp; Multimedia, Motion Graphics, AI Photoshop, Photography, Content Marketing, Social Media, AI Marketing</p>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>Engineering, Automotive and Manufacturing</h4>
+<p><strong>Partners:</strong> Kings Cornerstone, Synergem Consultancy, RVM, Gramin Shiksha</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">NDT (Non-Destructive Testing), Industrial Metallurgy &amp; Welding, Quality Engineering, CAD/CAM, Industrial Automation, Professional and Advanced Engineering Diplomas</p>
+</div>
+<div class="cc" style="border-left-color:#84cc16">
+<h4>Aviation and Hospitality</h4>
+<p><strong>Partners:</strong> Sky Vision Educational Services, Gramin Shiksha, Kings Cornerstone</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Aviation, Hospitality &amp; Travel Management Diplomas, Aviation &amp; Hospitality Management Certificate, Hospitality Management PG Diplomas</p>
+</div>
+<div class="cc" style="border-left-color:#06b6d4">
+<h4>Rural, Agriculture and Sustainability</h4>
+<p><strong>Partner:</strong> Gramin Shiksha</p>
+<p style="font-size:.77rem;margin-top:4px;color:var(--muted)">Solar Panel Installation, Electrical Installation &amp; Repair, Plumbing, Construction Surveying, Library Science, Veterinary Assistance, Early Childhood Care, Fire Safety, Health Sanitation Technology, Artificial Insemination</p>
+</div>
+</div>
+
+<h3>Stackable Career Pathways</h3>
+<div class="card">
+<div class="g2">
+<div>
+<h4 style="color:var(--blue2)">Credit Structure</h4>
+<div class="os"><strong>30 hours = 1 credit</strong> | 1,200 hours = 40 credits = 1 NCrF Level</div>
+<div class="os"><strong>Non-credit Micro:</strong> 7.5-30 hours</div>
+<div class="os"><strong>NOS (National Occupational Standard):</strong> 30-210 hours</div>
+<div class="os"><strong>Short Term Training (STT):</strong> 360-780 hours</div>
+<div class="os"><strong>Long Term Training (LTT):</strong> 1,200 hours</div>
+<div class="os"><strong>+20 credits per semester</strong> for academic equivalence (WISE pathway)</div>
+</div>
+<div>
+<h4 style="color:var(--orange)">B.Voc WISE Pathway</h4>
+<div class="os">12th Pass &#8594; Enrol in B.Voc (Work-Integrated, NCrF Level 4)</div>
+<div class="os">Exit Year 1 + 1yr work experience &#8594; <strong>UG Certificate (Level 4.5)</strong></div>
+<div class="os">Exit Year 2 + 2yr work experience &#8594; <strong>UG Diploma (Level 5)</strong></div>
+<div class="os">Complete Year 3 + 3yr work &#8594; <strong>B.Voc Degree (Level 5.5)</strong></div>
+<div class="os">B.Voc + 1yr further study &#8594; <strong>PG Diploma (Level 6)</strong></div>
+<div class="os">PG Diploma &#8594; <strong>MBA / M.Voc (Level 6.5)</strong></div>
+</div>
+</div>
+<p style="font-size:.8rem;color:var(--muted);margin-top:10px;background:var(--blue-soft);padding:8px 12px;border-radius:6px;border-left:3px solid var(--blue)"><strong style="color:var(--blue2)">APAAR ID System:</strong> Every MSU learner gets an APAAR (Automated Permanent Academic Account Registry) ID - Aadhaar-authenticated, DigiLocker-linked. All credits stored in ABC (Academic Bank of Credits) and transferable across institutions. APAAR is the learner's lifelong educational passport.</p>
+</div>
+</div>
+
+<!-- MSU PRODUCT TRAINING MATERIAL -->
+<div id="training" class="sec">
+<h2>MSU Product Training Material</h2>
+<div class="card" style="background:linear-gradient(135deg,#f0f8fd,#fffbf5)">
+<p style="font-size:.92rem;font-weight:500;color:var(--text)">Medhavi Group is a <strong>multi-entity education ecosystem</strong> comprising Medhavi Skills University (UGC-recognised, Sikkim), Medhavi Aspire Private Limited (MAPL, commercial workforce arm), and Medhavi Foundation (CSR/social impact). This section consolidates all product training, business unit architecture, market data, and go-to-market knowledge for internal teams.</p>
+</div>
+
+<h3>Group Overview - 3-Entity Architecture</h3>
+<div class="g3">
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>Medhavi Skills University (MSU)</h4>
+<span class="tag">UGC Section 2(f) Recognised</span>
+<span class="tag">NCVET Awarding Body</span>
+<p style="font-size:.82rem;margin-top:8px">Sikkim-based private skills university. Offers WISE programmes, NCVET qualifications, and NHEQF courses. Powers the academic credentialing engine for the group. 50+ QPs, 100+ programmes.</p>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>Medhavi Aspire Pvt Ltd (MAPL)</h4>
+<span class="tag">Commercial Workforce Arm</span>
+<span class="tag">NSDC Training Partner</span>
+<p style="font-size:.82rem;margin-top:8px">Handles B2B workforce skilling, staffing, and placement. Manages corporate accounts, NSDC training partnerships, and government projects. Drives IP/Staffing revenue stream.</p>
+</div>
+<div class="cc" style="border-left-color:#10b981">
+<h4>Medhavi Foundation</h4>
+<span class="tag">Section 8 Company</span>
+<span class="tag">CSR / Social Impact</span>
+<p style="font-size:.82rem;margin-top:8px">CSR project delivery vehicle. Manages HDFC, Adani, and govt-funded social skilling initiatives. Issues certificates jointly with MSU. Ensures compliance for CSR-mandated programmes.</p>
+</div>
+</div>
+
+<h3>Founders and Leadership</h3>
+<div class="g2">
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>Dr. Pravesh Dudani - Chancellor</h4>
+<span class="tag">IIT Kharagpur</span><span class="tag">Stanford University</span><span class="tag">Padma Shri Nominee</span>
+<p style="font-size:.82rem;margin-top:8px">Founder and Chancellor of MSU. IIT Kharagpur alumnus with executive education from Stanford. Pioneer of the WISE (Work-Integrated Skilling and Education) model in India. Recipient of multiple national awards for skilling innovation. Architect of the NCrF-NSQF dual-alignment strategy.</p>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>Kuldip Sarma - Pro-Chancellor</h4>
+<span class="tag">Co-Founder</span><span class="tag">Government Relations</span><span class="tag">Northeast India Specialist</span>
+<p style="font-size:.82rem;margin-top:8px">Co-founder and Pro-Chancellor of MSU. Deep expertise in Northeast India operations, government skilling programmes, and tribal/rural education outreach. Leads institutional partnerships and state government MoUs.</p>
+</div>
+</div>
+
+<h3>Business Unit Architecture</h3>
+<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">MSU business units are classified into Cash Engines (direct revenue-generating) and Brand Engines (credibility and pipeline-building).</p>
+<div class="g2">
+<div class="card">
+<h4 style="color:var(--blue2)">Cash Engines (Revenue Generating)</h4>
+<div class="os"><strong>EP (Education Partners)</strong> - NHEQF course delivery via accredited teaching partners. Primary revenue engine. ARR: Rs. 42 Crore</div>
+<div class="os"><strong>IP (Industry Partners)</strong> - B2B corporate skilling and workforce upskilling. ARR: Rs. 5 Crore</div>
+<div class="os"><strong>Staffing &amp; Placement</strong> - Workforce supply to corporates. ARR: Rs. 12 Crore</div>
+<div class="os"><strong>Recruitment</strong> - Lateral and fresher recruitment services. ARR: Rs. 2 Crore</div>
+<div class="os"><strong>Foundation / CSR</strong> - Government-funded and corporate CSR skilling. Includes HDFC, Adani, Defence</div>
+</div>
+<div class="card">
+<h4 style="color:var(--orange)">Brand Engines (Credibility and Pipeline)</h4>
+<div class="os"><strong>IAC (Industry Advisory Council)</strong> - Industry connects and curriculum validation. ARR: Rs. 1.5 Crore</div>
+<div class="os"><strong>Campus / Apprenticeship</strong> - Direct learner acquisition and campus placements</div>
+<div class="os"><strong>CRUX</strong> - Research, analytics, and thought leadership arm</div>
+<div class="os"><strong>HEI Partnership</strong> - MoUs with colleges and polytechnics for course delivery</div>
+<div class="os"><strong>MSSPL</strong> - Media and content production subsidiary</div>
+</div>
+</div>
+
+<h3>Market Sizing</h3>
+<div class="dgrid">
+<div class="stat"><span class="metric">Rs. 42 Cr</span><span>EP Vertical ARR</span></div>
+<div class="stat"><span class="metric">Rs. 5 Cr</span><span>IP Vertical ARR</span></div>
+<div class="stat"><span class="metric">Rs. 12 Cr</span><span>Staffing ARR</span></div>
+<div class="stat"><span class="metric">Rs. 2 Cr</span><span>Recruitment ARR</span></div>
+<div class="stat"><span class="metric">Rs. 1.5 Cr</span><span>IAC ARR</span></div>
+<div class="stat"><span class="metric">62.5 Cr+</span><span>Total Group ARR</span></div>
+</div>
+<div class="card">
+<div class="g3">
+<div>
+<h4 style="color:var(--blue2)">TAM / SAM / SOM</h4>
+<p style="font-size:.82rem;color:var(--text2)"><strong>TAM:</strong> India skilling and vocational education market - Rs. 4.6 Lakh Crore by 2025 (NSDC estimate). ~14 crore learners in formal skilling funnel.</p>
+<p style="font-size:.82rem;color:var(--text2)"><strong>SAM:</strong> Work-integrated, NCrF-aligned, UGC-recognized programmes - ~40 Lakh learners p.a. eligible for WISE-model programmes.</p>
+</div>
+<div>
+<h4 style="color:var(--orange)">AOV and ARR Levers</h4>
+<p style="font-size:.82rem;color:var(--text2)"><strong>EP Average Order Value:</strong> Rs. 15,000-75,000 per learner per course. PGD programmes Rs. 45,000-1,20,000.</p>
+<p style="font-size:.82rem;color:var(--text2)"><strong>IP/Corporate:</strong> Rs. 2,500-15,000 per learner per programme (bulk pricing). CSR projects: Rs. 18,000-35,000 per beneficiary.</p>
+</div>
+<div>
+<h4 style="color:var(--blue2)">SOM</h4>
+<p style="font-size:.82rem;color:var(--text2)">Current SOM: ~35,000 active learners across all verticals. 3-year target: 2 Lakh learners. Geographic focus: Tier 2/3 cities, Northeast India, and defence locations.</p>
+</div>
+</div>
+</div>
+
+<h3>Group Journey</h3>
+<div class="card">
+<div class="lf">
+<div class="qi"><span class="qq">2012-2015</span><p style="font-size:.82rem;color:var(--text2)"><strong>Pilot Phase:</strong> Started as a vocational training provider in Kolkata. Delivered first batch of skill programmes under NSDC. Established foundation team and curriculum design capability.</p></div>
+<div class="qi"><span class="qq">2016-2019</span><p style="font-size:.82rem;color:var(--text2)"><strong>Growth Phase:</strong> NSDC Training Partner empanelment. Scale-up of B2B corporate skilling. Entry into Northeast India. First government skilling contracts. MAPL formed as commercial entity.</p></div>
+<div class="qi"><span class="qq">2019-2021</span><p style="font-size:.82rem;color:var(--text2)"><strong>University Formation:</strong> MSU receives Letter of Intent from Sikkim Government. Builds academic infrastructure. UGC Section 2(f) recognition. First WISE programme cohorts launched.</p></div>
+<div class="qi"><span class="qq">2022-2024</span><p style="font-size:.82rem;color:var(--text2)"><strong>Diversification:</strong> NCVET Awarding Body status (2nd university in India). Launch of 50+ NCVET QPs. Defence partnerships activated (Army, Navy, Air Force, Coast Guard). NHEQF EP ecosystem built to 25+ partners.</p></div>
+<div class="qi"><span class="qq">2025-Present</span><p style="font-size:.82rem;color:var(--text2)"><strong>Scale Phase:</strong> ABC, APAAR, DigiLocker integration. NCrF credit-stacking operationalised. International partnerships (GCC countries, Malaysia). Target: 2 Lakh learners, 100+ EPs, presence in 20+ states.</p></div>
+</div>
+</div>
+
+<h3>Awards and Recognition</h3>
+<div class="cgrid">
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Best Vocational University - India Education Excellence Awards</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Top Skilling University - ASSOCHAM National Awards</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Excellence in Work-Integrated Education - FICCI Higher Education Summit</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Best University for Vocational Education - Times of India Education Awards</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Innovative University Award - India Today Education Summit</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">NCVET Outstanding Awarding Body Recognition 2023</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Best CSR Skilling Partner - HDFC Bank CSR Awards</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Chancellor Dr. Pravesh Dudani - Padma Shri Nominee</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Defence Education Partner Recognition - Ministry of Defence</span></div>
+<div class="cc"><span class="tag" style="background:var(--orange-soft);color:var(--orange)">Northeast India Leading Skills University - Assam Government</span></div>
+</div>
+
+<h3>Defence Partnerships</h3>
+<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">MSU is among the few universities with active skilling MoUs across all branches of Indian Armed Forces and paramilitary organisations. Programmes designed for active personnel, veterans (ESM), and dependents.</p>
+<div class="g2">
+<div class="card">
+<h4 style="color:var(--blue2)">Armed Forces and Paramilitary Partners</h4>
+<div class="os">Indian Army - Resettlement and re-skilling for retiring officers and JCOs/ORs</div>
+<div class="os">Indian Navy - Technical and management programmes for sailors and officers</div>
+<div class="os">Indian Air Force - Upskilling for technical trades and administrative cadre</div>
+<div class="os">Indian Coast Guard - Maritime logistics and safety programmes</div>
+<div class="os">SSB (Sashastra Seema Bal) - Border management and community skilling</div>
+<div class="os">Assam Rifles - Northeast-focused resettlement programmes</div>
+<div class="os">CRPF (Central Reserve Police Force) - Welfare and upskilling initiatives</div>
+</div>
+<div class="card">
+<h4 style="color:var(--orange)">Defence Programme Offerings</h4>
+<div class="os"><strong>Resettlement Programmes:</strong> B.Voc, MBA, M.Voc for retiring personnel</div>
+<div class="os"><strong>Technical Upskilling:</strong> EV Technology, Electronics, IT courses with NSQF credits</div>
+<div class="os"><strong>ESM (Ex-Servicemen):</strong> Placement-linked B.Voc in Management, Logistics, Security</div>
+<div class="os"><strong>Dependents:</strong> NHEQF short-term courses in healthcare, IT, retail for family members</div>
+<div class="os"><strong>Online delivery:</strong> LMS-based flexible schedules compatible with posting locations</div>
+<div class="os"><strong>APAAR + DigiLocker:</strong> Credentials recognized for civilian employment post-service</div>
+</div>
+</div>
+
+<h3>School Solutions</h3>
+<div class="g2">
+<div class="card">
+<h4 style="color:var(--blue2)">Training of Trainers (ToT) Programme</h4>
+<p style="font-size:.82rem;color:var(--text2)">MSU ToT programme certifies school teachers and vocational instructors to deliver NSQF-aligned curriculum. Covers pedagogy, assessment design, practical delivery, and NVEQF content for Classes IX-XII.</p>
+<div class="os">CBSE, ICSE, State Board vocational subject teachers</div>
+<div class="os">ITI and polytechnic instructors seeking NCVET-recognised credentials</div>
+<div class="os">Corporate L&amp;D trainers for WISE delivery</div>
+<div class="os">Duration: 40-120 hours | Mode: Online + Workshop | Certificate: MSU + NCVET</div>
+</div>
+<div class="card">
+<h4 style="color:var(--orange)">Non-Credit Skill Certificates (School Level)</h4>
+<p style="font-size:.82rem;color:var(--text2)">Short skill certificate programmes (7.5-30 hours) for school students (Classes VIII-XII). Delivered via school tie-ups, career fairs, and online platforms.</p>
+<div class="os">Digital Literacy &amp; Cyber Safety (15 hrs)</div>
+<div class="os">Financial Literacy &amp; Personal Finance (15 hrs)</div>
+<div class="os">Introduction to Entrepreneurship (30 hrs)</div>
+<div class="os">Basic Coding &amp; AI Awareness (30 hrs)</div>
+<div class="os">Career Readiness &amp; Soft Skills (15 hrs)</div>
+</div>
+</div>
+
+<h3>Strategic Partnerships</h3>
+<div class="card">
+<h4 style="color:var(--blue2)">Adani Skills - 4-Dimension Partnership Model</h4>
+<div class="g2" style="margin-top:8px">
+<div>
+<div class="os"><strong>Dimension 1 - Academic:</strong> MSU degrees and diplomas for Adani Group employees and community members at plant locations</div>
+<div class="os"><strong>Dimension 2 - Vocational:</strong> NCVET/NSQF qualifications for Adani contractor workforce and local communities near industrial sites</div>
+</div>
+<div>
+<div class="os"><strong>Dimension 3 - CSR/Social:</strong> Medhavi Foundation delivers Adani Foundation CSR mandated skilling for BPL/SC/ST beneficiaries in project-affected villages</div>
+<div class="os"><strong>Dimension 4 - Placement:</strong> MAPL runs placement-linked programmes feeding skilled workers into Adani ports, logistics, and power operations</div>
+</div>
+</div>
+</div>
+<div class="g2">
+<div class="card">
+<h4 style="color:var(--blue2)">HDFC Bank CSR Programme</h4>
+<p style="font-size:.82rem;color:var(--text2)">Medhavi Foundation is an HDFC Bank CSR implementation partner for skilling of rural youth in banking, insurance, and financial literacy. Programme scope: 5,000+ beneficiaries p.a. across Maharashtra, UP, and Northeast India.</p>
+<div class="os">Course: Banking &amp; Financial Services (200 hrs)</div>
+<div class="os">Certification: MSU + HDFC jointly issued</div>
+<div class="os">Placement: HDFC Bank, partner NBFCs, microfinance institutions</div>
+<div class="os">CSR funding: Rs. 2.5 Crore p.a.</div>
+</div>
+<div class="card">
+<h4 style="color:var(--orange)">AWS re/Start Programme</h4>
+<p style="font-size:.82rem;color:var(--text2)">MSU is an AWS re/Start delivery partner - a global workforce development programme preparing unemployed and underemployed individuals for cloud careers.</p>
+<div class="os">Duration: 12 weeks full-time (320 hours)</div>
+<div class="os">Credential: AWS Cloud Practitioner + MSU Certificate</div>
+<div class="os">Target: Graduates from non-CS backgrounds, women returners, ESM</div>
+<div class="os">Placement: AWS partner companies, cloud roles in India and GCC</div>
+</div>
+</div>
+
+<h3>Offices and Geography</h3>
+<div class="cgrid">
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>Kolkata (HQ)</h4>
+<p style="font-size:.82rem;color:var(--text2)">Primary operations hub. MAPL registered office. Corporate BD, Finance, HR, Legal, Awarding Body operations. Core EP partner management.</p>
+</div>
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>Delhi NCR</h4>
+<p style="font-size:.82rem;color:var(--text2)">Government relations, policy advocacy, and MoU management. NSDC, UGC, AICTE, NCVET liaison office. Key accounts for Delhi-based corporates.</p>
+</div>
+<div class="cc" style="border-left-color:var(--blue)">
+<h4>Gurgaon</h4>
+<p style="font-size:.82rem;color:var(--text2)">Corporate sales and B2B partnerships. IT/ITeS sector client management. Staffing and placement operations for NCR-based companies.</p>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>Sikkim (East and West)</h4>
+<p style="font-size:.82rem;color:var(--text2)">MSU campus locations (East Sikkim and West Sikkim). Academic delivery, student services, and university administration. State government relations.</p>
+</div>
+<div class="cc" style="border-left-color:var(--orange)">
+<h4>Dhanbad</h4>
+<p style="font-size:.82rem;color:var(--text2)">Mining and industrial sector skilling hub. Proximity to coal belt and BCCL/CCL operations. Engineering and safety programme delivery.</p>
+</div>
+</div>
+
+<h3>Key Contacts</h3>
+<div class="g3">
+<div class="cc">
+<h4>Sonam Sareen</h4>
+<span class="tag">Partnerships and BD</span>
+<p style="font-size:.82rem;margin-top:6px;color:var(--text2)">Head of Partnerships and Business Development. Primary contact for EP onboarding, HEI partnerships, and strategic alliance negotiations.</p>
+</div>
+<div class="cc">
+<h4>Mohasin Tahasildar</h4>
+<span class="tag">Awarding Body Operations</span>
+<p style="font-size:.82rem;margin-top:6px;color:var(--text2)">Leads MSU NCVET Awarding Body operations, QP development, assessment and certification for all NSQF/NCVET qualifications.</p>
+</div>
+<div class="cc">
+<h4>Saurabh Mishra</h4>
+<span class="tag">VP - Govt and Industry</span>
+<p style="font-size:.82rem;margin-top:6px;color:var(--text2)">Vice President, Government and Industry Relations. Manages state government MoUs, NSDC projects, and public sector skilling contracts.</p>
+</div>
+<div class="cc">
+<h4>Devender K Saini</h4>
+<span class="tag">Group CSO</span>
+<p style="font-size:.82rem;margin-top:6px;color:var(--text2)">Chief Strategy Officer. Drives long-term strategic planning, new vertical development, investor relations, and cross-group synergy initiatives.</p>
+</div>
+<div class="cc">
+<h4>Kuldip Sarma</h4>
+<span class="tag">Pro-Chancellor</span>
+<p style="font-size:.82rem;margin-top:6px;color:var(--text2)">Pro-Chancellor and Co-Founder. Senior leadership escalations, Sikkim/Northeast India operations, and government relations at the highest level.</p>
+</div>
+</div>
+</div>
+
+</main>
+</div>
+<script>
+// PARTICLE BACKGROUND
+var C=document.getElementById('bgc'),X=C.getContext('2d'),W,H,P=[];
+function rsz(){W=C.width=window.innerWidth;H=C.height=window.innerHeight;}
+rsz();window.addEventListener('resize',rsz);
+function mp(){var p={x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,a:Math.random()*.45+.1,g:Math.random()<.25};return p;}
+for(var i=0;i<130;i++)P.push(mp());
+function draw(){
+  X.clearRect(0,0,W,H);
+  for(var i=0;i<P.length;i++){
+    for(var j=i+1;j<P.length;j++){
+      var dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<115){X.beginPath();X.moveTo(P[i].x,P[i].y);X.lineTo(P[j].x,P[j].y);X.strokeStyle='rgba(27,142,196,'+((115-d)/115*.06)+')';X.lineWidth=.5;X.stroke();}
+    }
+    X.beginPath();X.arc(P[i].x,P[i].y,P[i].r,0,2*Math.PI);
+    X.fillStyle=P[i].g?'rgba(27,142,196,'+P[i].a+')':'rgba(232,146,26,'+(P[i].a*.6)+')';
+    X.fill();
+    P[i].x+=P[i].vx;P[i].y+=P[i].vy;
+    if(P[i].x<0||P[i].x>W||P[i].y<0||P[i].y>H){P.splice(i,1);P.push(mp());i--;}
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+
+// NAVIGATION
+function show(id,el){
+  var secs=document.querySelectorAll('.sec');
+  for(var i=0;i<secs.length;i++)secs[i].classList.remove('on');
+  var links=document.querySelectorAll('nav a');
+  for(var i=0;i<links.length;i++)links[i].classList.remove('active');
+  var s=document.getElementById(id);
+  if(s)s.classList.add('on');
+  if(el)el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// COUNTERS
+function runCounters(){
+  var els=document.querySelectorAll('.cnt');
+  for(var i=0;i<els.length;i++){
+    (function(el){
+      if(el._done)return;el._done=true;
+      var t=parseInt(el.dataset.t)||0,c=0,inc=t/65;
+      var tm=setInterval(function(){
+        c+=inc;
+        if(c>=t){el.textContent=t+'+';clearInterval(tm);}
+        else{el.textContent=Math.floor(c)+'+';}
+      },18);
+    })(els[i]);
+  }
+}
+setTimeout(runCounters,600);
+
+// FILTERS
+function filterCat(){
+  var q=document.getElementById('catSearch').value.toLowerCase();
+  var rows=document.querySelectorAll('#catT tbody tr');
+  for(var i=0;i<rows.length;i++)rows[i].style.display=rows[i].textContent.toLowerCase().indexOf(q)>-1?'':'none';
+}
+function filterPart(){
+  var q=document.getElementById('partSearch').value.toLowerCase();
+  var rows=document.querySelectorAll('#partT tbody tr');
+  for(var i=0;i<rows.length;i++)rows[i].style.display=rows[i].textContent.toLowerCase().indexOf(q)>-1?'':'none';
+}
+function filterGlos(){
+  var q=document.getElementById('glosSearch').value.toLowerCase();
+  var rows=document.querySelectorAll('#glosT tbody tr');
+  for(var i=0;i<rows.length;i++)rows[i].style.display=rows[i].textContent.toLowerCase().indexOf(q)>-1?'':'none';
+}
+
+// Q&A DATA
+var QA=[
+{q:"What is Medhavi Skills University?",a:"MSU is India's first private Skills University under the Medhavi Skills University Act 2021, Govt. of Chhattisgarh. UGC-recognised (Section 2f & 12B), NAAC-accredited, MSDE-aligned. Pioneer for NEP 2020 Work-Integrated Learning at scale."},
+{q:"What does WISE stand for?",a:"Work-Integrated Skilling & Education — MSU's flagship model. Learners placed inside industry from Day 1, earning a stipend while pursuing a UGC-recognised degree. 80-90% programme time is OJT."},
+{q:"What is the difference between IP and EP?",a:"IP (Industry Partnership) = MSU directly credentials workforce of corporates and staffing companies. EP (Education Partnership) = MSU empowers training institutes and EdTech platforms with UGC credentials. IP is employer-facing; EP is institute-facing."},
+{q:"Is GST applicable on MSU programmes?",a:"No. GST-exempt under CGST Notification No. 12/2017 — Entry 66 (vocational education by MSDE-recognised QP provider) and Entry 69 (university education). 18% cost advantage over taxable training vendors."},
+{q:"Are WISE apprentices liable for PF contributions?",a:"No. EPFO letter dated 27 July 2022 confirms WISE trainees are student trainees — not employees under EPF & MP Act 1952. Zero PF on stipend. Saves approx Rs. 43.2 lakhs/year per 100 trainees at Rs. 15,000/month."},
+{q:"What is NAPS and how much does it save?",a:"National Apprenticeship Promotion Scheme — Govt reimburses 25% of stipend (max Rs. 1,500/month per apprentice) to employer. MAPL manages NAPS filing and reimbursement end-to-end."},
+{q:"What is CRUX?",a:"Centre for Reskilling, Upskilling & Extension — MSU's B2C platform at crux.msu.edu.in for working professionals. Offers MBA (15-month Accelerated & 24-month Work-Integrated) and Psychology PG (MA Psychology, MA Child Psychology, PGD Counselling). Active in Delhi, Kolkata, Dhanbad."},
+{q:"What is MAPL?",a:"Medhavi Advance Professionals Ltd. — MSU's commercial workforce arm. Handles staffing, payroll, NAPS/NATS compliance, and RTD (Recruit-Train-Deploy) for 44 direct industry clients and 30+ staffing partners."},
+{q:"How many hotel partners does MSU have for HHM?",a:"43 active hotel partners including JW Marriott, Crowne Plaza (3), Holiday Inn, Radisson Blu, Intercontinental Jaipur, The Fern (8), Sarovar (4), Enrise by Sayaji (3), Pride Hotels (3), Lemon Tree, Sterling Holidays, Golden Tulip, Regenta, Royal Orchid and more."},
+{q:"What is the Aarunya Initiative?",a:"India's first mall management Industry-as-Campus WISE programme with Nexus Select Trust (India's largest mall REIT, 17 Grade-A malls). Mall operations staff enrolled in B.Voc. Retail/Facilities. Live mall = OJT campus. CSR Schedule VII funded."},
+{q:"What is LEAP?",a:"Learn & Earn Associate Program — MSU's partnership with Quess Corp (India's largest workforce manager, 500K+ associates). Quess places associates at client sites; MSU credentials them via WISE. 3,000+ credentials issued in pilot year."},
+{q:"What is AEDP?",a:"Apprenticeship Embedded Degree Programme — MSU's partnership with AEQUS Aerospace. Frontline workers enrolled in B.Voc. while on shopfloor. Custom QP for aerospace components. Outcome: 95%+ retention at 18 months vs. 60% industry average. Rs. 40L+ annual savings."},
+{q:"What are the 5 layers of credentialing?",a:"Layer 1: DigiLocker (Govt-backed, tamper-proof). Layer 2: ABC — Academic Bank of Credits (NEP 2020, Aadhaar-linked). Layer 3: Skill India Digital Hub (5L+ employer visibility). Layer 4: QR Admission Letter (Day 1 employer verification). Layer 5: NSQF/NHEQF mapping (national + international recognition)."},
+{q:"Can MSU develop custom QPs?",a:"Yes. End-to-end Custom QP in 3-4 months (vs 12-18 months SSC). Plant visits, job role mapping, QP drafting, curriculum build, and MSU certification. Delivered for Suprajit, Hyundai Transys, Dixon, Mediforce, Nexus Select Trust."},
+{q:"What are the LMS demo credentials?",a:"URL: lms.msu.edu.in | Login: samplestudent@msu.edu.in | Password: lms@123. Features: multi-device, analytics, HD video, assessments, OJT logbook, gamification, e-certificates, DigiLocker/ABC/SIDH APIs, cohort management, live classes, multi-language, compliance reports."},
+{q:"What is the First Industry Approach?",a:"MSU's 7-principle philosophy: (1) Industry-designed curriculum, (2) Industry as campus — 80-90% OJT, (3) Credential portability — DigiLocker+ABC+NSQF, (4) Financial neutrality — GST/PF/NAPS savings, (5) Ecosystem neutrality, (6) Scale by design — asset-light, (7) Learner centricity — earn-while-you-learn."},
+{q:"How does Skills University differ from Traditional University?",a:"Campus: industry workplace vs physical campus. Curriculum: industry+MSU co-designed vs faculty-led. Learning: 80-90% OJT vs classroom. Employment: Day 1 vs after graduation. Stipend: paid by industry vs none. Fees: employer-funded vs student-paid. Credential: DigiLocker+ABC vs paper certificate."},
+{q:"What sectors does MSU cover?",a:"16 sectors: Tourism & Hospitality, IT/ITeS, Electronics/Hardware, Automotive, BFSI, Management, Healthcare, Retail, Logistics, Agriculture, Construction, Facilities Management, Psychology, Textile/Apparel, Aviation, Media & Entertainment."},
+{q:"What is the 3-layer WISE delivery architecture?",a:"Layer 1 Enrolment (Day 0): QR letter, ABC, DigiLocker, LMS, NAPS. Layer 2 OJT: 80-90% workplace time, logbook, supervisor mentoring, LMS supplement. Layer 3 Certification: LMS assessments, MSU coordinator visits, online exams, degree issued, DigiLocker credential."},
+{q:"What is the 6-stage learner lifecycle?",a:"Stage 1: Need Assessment. Stage 2: Personalised Learning Plan. Stage 3: Engaging Learning (LMS + OJT). Stage 4: Application & Practice. Stage 5: Certification & R&R. Stage 6: Continuous Growth (ABC stacking)."},
+{q:"What is RPL?",a:"Recognition of Prior Learning — MSU formally assesses and certifies competencies from informal/non-formal work experience. Credits can reduce programme duration. Core feature of CRUX for working professionals."},
+{q:"What CSR benefits does WISE offer?",a:"WISE skilling is Schedule VII CSR activity — Companies Act 2013, Item (ii) promoting education and Item (iv) vocational skills training. Corporates fund WISE enrolments from mandatory CSR budgets. MSU provides CSR impact reports and DigiLocker records."},
+{q:"What is MSU's legal and regulatory status?",a:"Established under Medhavi Skills University Act 2021, Chhattisgarh. UGC Section 2(f) & 12B. NAAC accredited. MSDE-recognised QP/NOS provider. DigiLocker partner. SIDH registered. ABC partner. NEP 2020 pioneer. National Skills University Category A."},
+{q:"How many MAPL clients does MSU have?",a:"44 direct industry clients: Automotive (Suprajit 9 units, Endurance 10+, Hyundai, M&M, Ashok Leyland, TVS, GKN, RSB, Sansera), Electronics (Dixon, Elin, Microtek, Penguin), Pharma (Mediforce, Pharma Force, Charak), FMCG (PepsiCo/Varun, Britannia, Manjushree), Logistics (OM Logistics, Zepto) and others."},
+{q:"What are the 7 IP Concept Decks?",a:"1. Workforce Corporate (all industries). 2. Data Centres (hyperscalers). 3. AI Certification (white/grey-collar). 4. B.Tech Proposal (manufacturing). 5. MBA Proposal (mid-management). 6. Staffing Deck (staffing companies). 7. HHM (hotels/hospitality). Each tailored to a specific buyer persona."},
+{q:"What is WISE-PLUS?",a:"WISE-PLUS is the CRUX variant for working professionals. Part-time, online-first, RPL-enabled. No need to leave job. Weekend LMS + online proctored exams + portfolio. UGC degree earned while continuing employment."},
+{q:"What academic tie-up does HHM have?",a:"IIM Kozhikode — provides management education overlay to the B.Sc. HHM programme, adding leadership and business management depth to the hospitality operations curriculum."},
+{q:"What is NCrF?",a:"National Credit Framework — integrates NSQF + NHEQF into one unified framework. Enables seamless credit transfer between skill and academic education. MSU is an early adopter institution."},
+{q:"What EP programmes does MSU offer for healthcare?",a:"EP Sectoral partners: GD Goenka Healthcare, Grace Paramedical, Gayathri Medical Institute, Felix Hospital, Sushrutha Ayurvedic, Arogya Medical Trust, Ahalia International Foundation. Programmes: B.Sc. Healthcare Mgmt, D.Voc. Medical Lab Tech, PGD Hospital Administration."},
+{q:"What is the Barbeque Nation WISE outcome?",a:"700+ trained via B.Voc./D.Voc. Hospitality & Restaurant Operations. Results: 40% attrition reduction, 32% faster productivity ramp-up, 18% GST saving on programme cost, PF-exempt apprentice classification."},
+{q:"How does CRUX work for a working professional?",a:"1. Apply online — no entrance exam. 2. RPL assessment — prior experience credits reduce duration. 3. Weekend/online learning on LMS — no job disruption. 4. Online proctored exams + portfolio. 5. UGC degree via DigiLocker, NCrF-aligned, globally recognised."}
+];
+
+function buildQA(data){
+  var box=document.getElementById('qaBox');
+  if(!box)return;
+  box.innerHTML='';
+  if(!data.length){box.innerHTML='<div class="card" style="text-align:center;color:#7a9bc4;padding:40px">No results found.</div>';return;}
+  for(var i=0;i<data.length;i++){
+    var d=document.createElement('div');
+    d.className='qi';
+    d.innerHTML='<div class="qq" onclick="tQA(this)"><span>'+data[i].q+'</span><span class="qa-arrow">&#9660;</span></div><div class="qa">'+data[i].a+'</div>';
+    box.appendChild(d);
+  }
+}
+function tQA(el){
+  var a=el.nextElementSibling;
+  var open=a.style.maxHeight&&a.style.maxHeight!=='0px';
+  var all=document.querySelectorAll('.qa');
+  var qs=document.querySelectorAll('.qq');
+  for(var i=0;i<all.length;i++){all[i].style.maxHeight='0px';all[i].style.padding='0 18px';}
+  for(var i=0;i<qs.length;i++)qs[i].classList.remove('open');
+  if(!open){a.style.maxHeight=a.scrollHeight+'px';a.style.padding='0 18px 16px';el.classList.add('open');}
+}
+function filterQA(){
+  var q=document.getElementById('qaSearch').value.toLowerCase();
+  var filtered=q?QA.filter(function(i){return i.q.toLowerCase().indexOf(q)>-1||i.a.toLowerCase().indexOf(q)>-1;}):QA;
+  buildQA(filtered);
+}
+
+buildQA(QA);
+show('home', document.querySelector('nav a'));
+</script>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
